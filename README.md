@@ -39,10 +39,12 @@ Here's the tech stack and how each part will be used:
 
 A minimal login/registration page. Just the app name, inputs for email/password, and a login button.
 
+![Login Screen Sketch](BeatQueue.png)
+
 
 
 **2. Main Event Screen (DJ View)**
 
 This is the main interface. It'll show the event name, a list of requested songs with their upvote counts, and controls for the DJ to manage the queue. The search bar will have a clear toggle to switch between searching Apple Music and SoundCloud.
 
-
+![Main Event Screen Sketch](c.png)
