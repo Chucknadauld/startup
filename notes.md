@@ -1,1 +1,2 @@
-I honestly haven't learned anything new yet but look forward to learning!
+Server IP: http://http://44.208.222.219/
+
