@@ -50,25 +50,25 @@ I am going to use the required technologies in the following ways:
 1. Clone this repository to your development environment.
 1. Create a `dbConfig.json` file that contains the credentials to access your Mongo Database. This must be placed in the root of the project.
 
-   ```json
-   {
-     "hostname": "YourMongoDbAccount.xiu1cqz.mongodb.net",
-     "userName": "YourMongoDbUsername", 
-     "password": "YourMongoDbPassword"
-   }
-   ```
+    ```json
+    {
+        "hostname": "YourMongoDbAccount.xiu1cqz.mongodb.net",
+        "userName": "YourMongoDbUsername",
+        "password": "YourMongoDbPassword"
+    }
+    ```
 
 1. Use the deployment script to deploy BeatQueue to an EC2 instance. You will need the PEM key in order to run the script.
 
-   ```sh
-   ./scripts/deployFiles.sh -k ~/keys/yourkeyhere.pem -h yourdomainnamehere.click
-   ```
+    ```sh
+    ./scripts/deployFiles.sh -k ~/keys/yourkeyhere.pem -h yourdomainnamehere.click
+    ```
 
 1. Verify that the application is running on the domain.
 
-   ```sh
-   curl startup.cs260.click
-   ```
+    ```sh
+    curl startup.cs260.click
+    ```
 
 ## HTML deliverable
 

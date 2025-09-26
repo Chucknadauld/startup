@@ -1,273 +1,362 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Join Event - BeatQueue</title>
-    <link rel="stylesheet" href="../main.css">
-</head>
-<body>
-    <header>
-        <nav>
-            <div>
-                <h1>BeatQueue</h1>
-                <p>Join the party and request your favorite tracks!</p>
-            </div>
-            <div>
-                <a href="../index.html">Home</a>
-                <a href="dashboard.html">Dashboard</a>
-                <a href="event.html">Live Event</a>
-                <a href="join.html">Join Event</a>
-            </div>
-        </nav>
-    </header>
-
-    <main>
-        <section>
-            <h2>Join an Event</h2>
-            <div>
-                <h3>Enter Event Code</h3>
-                <form>
-                    <div>
-                        <label for="eventCode">Event Code:</label>
-                        <input type="text" id="eventCode" name="eventCode" placeholder="FN2024" required>
-                    </div>
-                    <div>
-                        <label for="guestName">Your Name (optional):</label>
-                        <input type="text" id="guestName" name="guestName" placeholder="Guest_123">
-                    </div>
-                    <button type="submit">Join Event</button>
-                </form>
-                
-                <p>Don't have a code? Ask your DJ for the event link!</p>
-            </div>
-        </section>
-
-        <section id="eventInfo" style="display: block;">
-            <h2>Friday Night Set</h2>
-            <p>DJ: <strong>DJ Awesome</strong></p>
-            <p>Location: Club Downtown</p>
-            <p>Connected as: <span id="userName">Guest_847</span></p>
-            <p>Users online: <span id="onlineUsers">23</span></p>
-            
-            <h3>Now Playing</h3>
-            <div id="nowPlaying">
-                <img src="../images/placeholder.png" alt="Album Cover" width="150" height="150">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Join Event - BeatQueue</title>
+        <link rel="stylesheet" href="../main.css" />
+    </head>
+    <body>
+        <header>
+            <nav>
                 <div>
-                    <h4>Animals</h4>
-                    <p>Martin Garrix</p>
-                    <p>Duration: 1:23 / 3:00</p>
-                    <p>From: Apple Music</p>
+                    <h1>BeatQueue</h1>
+                    <p>Join the party and request your favorite tracks!</p>
                 </div>
-            </div>
-        </section>
+                <div>
+                    <a href="../index.html">Home</a>
+                    <a href="dashboard.html">Dashboard</a>
+                    <a href="event.html">Live Event</a>
+                    <a href="join.html">Join Event</a>
+                </div>
+            </nav>
+        </header>
 
-        <section id="songSearch" style="display: block;">
-            <h2>Add Songs to Queue</h2>
-            <div>
-                <input type="text" id="searchInput" placeholder="Search for songs, artists..." value="daft punk">
-                <select id="sourceSelect">
-                    <option value="apple">Apple Music</option>
-                    <option value="soundcloud">SoundCloud</option>
-                    <option value="both">Both Sources</option>
-                </select>
-                <button id="searchButton">Search</button>
-                
-                <div id="apiResults">
-                    <h4>Third-Party API Results:</h4>
-                    <div>
-                        <img src="https://via.placeholder.com/80x80" alt="Album Art" width="80" height="80">
+        <main>
+            <section>
+                <h2>Join an Event</h2>
+                <div>
+                    <h3>Enter Event Code</h3>
+                    <form>
                         <div>
-                            <h5>One More Time</h5>
-                            <p>Daft Punk</p>
-                            <p>Album: Discovery</p>
-                            <p>Source: Apple Music</p>
-                            <audio controls>
-                                <source src="#" type="audio/mpeg">
-                                Preview not available
-                            </audio>
+                            <label for="eventCode">Event Code:</label>
+                            <input
+                                type="text"
+                                id="eventCode"
+                                name="eventCode"
+                                placeholder="FN2024"
+                                required
+                            />
                         </div>
-                        <button>Add to Queue</button>
-                    </div>
-                    
-                    <div>
-                        <img src="https://via.placeholder.com/80x80" alt="Album Art" width="80" height="80">
                         <div>
-                            <h5>Around the World</h5>
-                            <p>Daft Punk</p>
-                            <p>Album: Homework</p>
-                            <p>Source: Apple Music</p>
-                            <audio controls>
-                                <source src="#" type="audio/mpeg">
-                                Preview not available
-                            </audio>
+                            <label for="guestName">Your Name (optional):</label>
+                            <input
+                                type="text"
+                                id="guestName"
+                                name="guestName"
+                                placeholder="Guest_123"
+                            />
                         </div>
-                        <button>Add to Queue</button>
-                    </div>
+                        <button type="submit">Join Event</button>
+                    </form>
 
+                    <p>Don't have a code? Ask your DJ for the event link!</p>
+                </div>
+            </section>
+
+            <section id="eventInfo" style="display: block">
+                <h2>Friday Night Set</h2>
+                <p>DJ: <strong>DJ Awesome</strong></p>
+                <p>Location: Club Downtown</p>
+                <p>Connected as: <span id="userName">Guest_847</span></p>
+                <p>Users online: <span id="onlineUsers">23</span></p>
+
+                <h3>Now Playing</h3>
+                <div id="nowPlaying">
+                    <img
+                        src="../images/placeholder.png"
+                        alt="Album Cover"
+                        width="150"
+                        height="150"
+                    />
                     <div>
-                        <img src="https://via.placeholder.com/80x80" alt="Album Art" width="80" height="80">
+                        <h4>Animals</h4>
+                        <p>Martin Garrix</p>
+                        <p>Duration: 1:23 / 3:00</p>
+                        <p>From: Apple Music</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="songSearch" style="display: block">
+                <h2>Add Songs to Queue</h2>
+                <div>
+                    <input
+                        type="text"
+                        id="searchInput"
+                        placeholder="Search for songs, artists..."
+                        value="daft punk"
+                    />
+                    <select id="sourceSelect">
+                        <option value="apple">Apple Music</option>
+                        <option value="soundcloud">SoundCloud</option>
+                        <option value="both">Both Sources</option>
+                    </select>
+                    <button id="searchButton">Search</button>
+
+                    <div id="apiResults">
+                        <h4>Third-Party API Results:</h4>
                         <div>
-                            <h5>Robot Rock (Justice Remix)</h5>
-                            <p>Daft Punk</p>
-                            <p>Remix/Bootleg</p>
-                            <p>Source: SoundCloud</p>
-                            <audio controls>
-                                <source src="#" type="audio/mpeg">
-                                Preview not available
-                            </audio>
+                            <img
+                                src="https://via.placeholder.com/80x80"
+                                alt="Album Art"
+                                width="80"
+                                height="80"
+                            />
+                            <div>
+                                <h5>One More Time</h5>
+                                <p>Daft Punk</p>
+                                <p>Album: Discovery</p>
+                                <p>Source: Apple Music</p>
+                                <audio controls>
+                                    <source src="#" type="audio/mpeg" />
+                                    Preview not available
+                                </audio>
+                            </div>
+                            <button>Add to Queue</button>
                         </div>
-                        <button>Add to Queue</button>
+
+                        <div>
+                            <img
+                                src="https://via.placeholder.com/80x80"
+                                alt="Album Art"
+                                width="80"
+                                height="80"
+                            />
+                            <div>
+                                <h5>Around the World</h5>
+                                <p>Daft Punk</p>
+                                <p>Album: Homework</p>
+                                <p>Source: Apple Music</p>
+                                <audio controls>
+                                    <source src="#" type="audio/mpeg" />
+                                    Preview not available
+                                </audio>
+                            </div>
+                            <button>Add to Queue</button>
+                        </div>
+
+                        <div>
+                            <img
+                                src="https://via.placeholder.com/80x80"
+                                alt="Album Art"
+                                width="80"
+                                height="80"
+                            />
+                            <div>
+                                <h5>Robot Rock (Justice Remix)</h5>
+                                <p>Daft Punk</p>
+                                <p>Remix/Bootleg</p>
+                                <p>Source: SoundCloud</p>
+                                <audio controls>
+                                    <source src="#" type="audio/mpeg" />
+                                    Preview not available
+                                </audio>
+                            </div>
+                            <button>Add to Queue</button>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <section id="currentQueue" style="display: block;">
-            <h2>Current Queue</h2>
-            <div id="queueList">
+            <section id="currentQueue" style="display: block">
+                <h2>Current Queue</h2>
+                <div id="queueList">
+                    <div>
+                        <span>1.</span>
+                        <img
+                            src="https://via.placeholder.com/60x60"
+                            alt="Album Art"
+                            width="60"
+                            height="60"
+                        />
+                        <div>
+                            <h4>Levels</h4>
+                            <p>Avicii</p>
+                            <p>Added by: You (Guest_847)</p>
+                        </div>
+                        <div>
+                            <span>12 votes</span>
+                            <button disabled>Already Voted</button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <span>2.</span>
+                        <img
+                            src="https://via.placeholder.com/60x60"
+                            alt="Album Art"
+                            width="60"
+                            height="60"
+                        />
+                        <div>
+                            <h4>One More Time</h4>
+                            <p>Daft Punk</p>
+                            <p>Added by: MusicLover23</p>
+                        </div>
+                        <div>
+                            <span>8 votes</span>
+                            <button>Vote</button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <span>3.</span>
+                        <img
+                            src="https://via.placeholder.com/60x60"
+                            alt="Album Art"
+                            width="60"
+                            height="60"
+                        />
+                        <div>
+                            <h4>Bangarang (VIP Mix)</h4>
+                            <p>Skrillex</p>
+                            <p>Added by: DubstepKing</p>
+                        </div>
+                        <div>
+                            <span>6 votes</span>
+                            <button>Vote</button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <span>4.</span>
+                        <img
+                            src="https://via.placeholder.com/60x60"
+                            alt="Album Art"
+                            width="60"
+                            height="60"
+                        />
+                        <div>
+                            <h4>Strobe</h4>
+                            <p>Deadmau5</p>
+                            <p>Added by: ProgHouseFan</p>
+                        </div>
+                        <div>
+                            <span>4 votes</span>
+                            <button>Vote</button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <span>5.</span>
+                        <img
+                            src="https://via.placeholder.com/60x60"
+                            alt="Album Art"
+                            width="60"
+                            height="60"
+                        />
+                        <div>
+                            <h4>Clarity</h4>
+                            <p>Zedd</p>
+                            <p>Added by: EDMFan2024</p>
+                        </div>
+                        <div>
+                            <span>2 votes</span>
+                            <button>Vote</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2>Live Chat & Updates</h2>
+                <div id="liveUpdatesSection">
+                    <div id="chatFeed">
+                        <h4>Recent Activity:</h4>
+                        <div>
+                            <p>
+                                <strong>Guest_847:</strong> Great song choice!
+                            </p>
+                            <p>
+                                <strong>MusicLover23:</strong> Can we get some
+                                house music?
+                            </p>
+                            <p>
+                                <strong>System:</strong> New song added:
+                                "Levels" by Avicii
+                            </p>
+                            <p><strong>DanceQueen:</strong> This is my jam!</p>
+                            <p>
+                                <strong>System:</strong> "One More Time"
+                                received an upvote
+                            </p>
+                            <p>
+                                <strong>RaveFan99:</strong> When does the next
+                                set start?
+                            </p>
+                            <p>
+                                <strong>System:</strong> RaveFan99 joined the
+                                event
+                            </p>
+                        </div>
+                    </div>
+
+                    <div id="chatInput">
+                        <input
+                            type="text"
+                            placeholder="Send a message to other guests..."
+                            maxlength="200"
+                        />
+                        <button>Send</button>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2>Event Data</h2>
                 <div>
-                    <span>1.</span>
-                    <img src="https://via.placeholder.com/60x60" alt="Album Art" width="60" height="60">
-                    <div>
-                        <h4>Levels</h4>
-                        <p>Avicii</p>
-                        <p>Added by: You (Guest_847)</p>
-                    </div>
-                    <div>
-                        <span>12 votes</span>
-                        <button disabled>Already Voted</button>
-                    </div>
-                </div>
+                    <h3>Database Statistics</h3>
+                    <table>
+                        <tr>
+                            <th>Metric</th>
+                            <th>Value</th>
+                        </tr>
+                        <tr>
+                            <td>Your Songs Added</td>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            <td>Your Votes Cast</td>
+                            <td>4</td>
+                        </tr>
+                        <tr>
+                            <td>Total Event Songs</td>
+                            <td>15</td>
+                        </tr>
+                        <tr>
+                            <td>Songs Played So Far</td>
+                            <td>4</td>
+                        </tr>
+                        <tr>
+                            <td>Event Duration</td>
+                            <td>2h 15m</td>
+                        </tr>
+                        <tr>
+                            <td>Connected Users</td>
+                            <td>23</td>
+                        </tr>
+                    </table>
 
-                <div>
-                    <span>2.</span>
-                    <img src="https://via.placeholder.com/60x60" alt="Album Art" width="60" height="60">
-                    <div>
-                        <h4>One More Time</h4>
-                        <p>Daft Punk</p>
-                        <p>Added by: MusicLover23</p>
-                    </div>
-                    <div>
-                        <span>8 votes</span>
-                        <button>Vote</button>
-                    </div>
+                    <h3>Connection Status</h3>
+                    <p>
+                        Music Services:
+                        <span style="color: green">Connected</span>
+                    </p>
+                    <p>Last Update: <span id="lastUpdate">Just now</span></p>
                 </div>
+            </section>
+        </main>
 
-                <div>
-                    <span>3.</span>
-                    <img src="https://via.placeholder.com/60x60" alt="Album Art" width="60" height="60">
-                    <div>
-                        <h4>Bangarang (VIP Mix)</h4>
-                        <p>Skrillex</p>
-                        <p>Added by: DubstepKing</p>
-                    </div>
-                    <div>
-                        <span>6 votes</span>
-                        <button>Vote</button>
-                    </div>
-                </div>
-
-                <div>
-                    <span>4.</span>
-                    <img src="https://via.placeholder.com/60x60" alt="Album Art" width="60" height="60">
-                    <div>
-                        <h4>Strobe</h4>
-                        <p>Deadmau5</p>
-                        <p>Added by: ProgHouseFan</p>
-                    </div>
-                    <div>
-                        <span>4 votes</span>
-                        <button>Vote</button>
-                    </div>
-                </div>
-
-                <div>
-                    <span>5.</span>
-                    <img src="https://via.placeholder.com/60x60" alt="Album Art" width="60" height="60">
-                    <div>
-                        <h4>Clarity</h4>
-                        <p>Zedd</p>
-                        <p>Added by: EDMFan2024</p>
-                    </div>
-                    <div>
-                        <span>2 votes</span>
-                        <button>Vote</button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section>
-            <h2>Live Chat & Updates</h2>
-            <div id="liveUpdatesSection">
-                <div id="chatFeed">
-                    <h4>Recent Activity:</h4>
-                    <div>
-                        <p><strong>Guest_847:</strong> Great song choice!</p>
-                        <p><strong>MusicLover23:</strong> Can we get some house music?</p>
-                        <p><strong>System:</strong> New song added: "Levels" by Avicii</p>
-                        <p><strong>DanceQueen:</strong> This is my jam!</p>
-                        <p><strong>System:</strong> "One More Time" received an upvote</p>
-                        <p><strong>RaveFan99:</strong> When does the next set start?</p>
-                        <p><strong>System:</strong> RaveFan99 joined the event</p>
-                    </div>
-                </div>
-                
-                <div id="chatInput">
-                    <input type="text" placeholder="Send a message to other guests..." maxlength="200">
-                    <button>Send</button>
-                </div>
-            </div>
-        </section>
-
-        <section>
-            <h2>Event Data</h2>
+        <footer>
             <div>
-                <h3>Database Statistics</h3>
-                <table>
-                    <tr>
-                        <th>Metric</th>
-                        <th>Value</th>
-                    </tr>
-                    <tr>
-                        <td>Your Songs Added</td>
-                        <td>2</td>
-                    </tr>
-                    <tr>
-                        <td>Your Votes Cast</td>
-                        <td>4</td>
-                    </tr>
-                    <tr>
-                        <td>Total Event Songs</td>
-                        <td>15</td>
-                    </tr>
-                    <tr>
-                        <td>Songs Played So Far</td>
-                        <td>4</td>
-                    </tr>
-                    <tr>
-                        <td>Event Duration</td>
-                        <td>2h 15m</td>
-                    </tr>
-                    <tr>
-                        <td>Connected Users</td>
-                        <td>23</td>
-                    </tr>
-                </table>
-
-                <h3>Connection Status</h3>
-                <p>Music Services: <span style="color: green;">Connected</span></p>
-                <p>Last Update: <span id="lastUpdate">Just now</span></p>
+                <p>&copy; 2025 BeatQueue - Built by Chuck Nadauld</p>
+                <p>
+                    <a href="https://github.com/Chucknadauld/startup"
+                        >View on GitHub</a
+                    >
+                </p>
             </div>
-        </section>
-    </main>
-
-    <footer>
-        <div>
-            <p>&copy; 2025 BeatQueue - Built by Chuck Nadauld</p>
-            <p><a href="https://github.com/Chucknadauld/startup">View on GitHub</a></p>
-        </div>
-    </footer>
-</body>
+        </footer>
+    </body>
 </html>

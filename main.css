@@ -5,7 +5,7 @@
 }
 
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: "Arial", sans-serif;
     background-color: #1a1a1a;
     color: #ffffff;
     line-height: 1.6;
@@ -129,7 +129,9 @@ label {
     color: #e5e7eb;
 }
 
-input, select, textarea {
+input,
+select,
+textarea {
     padding: 0.75rem;
     border: 2px solid #374151;
     border-radius: 8px;
@@ -138,7 +140,9 @@ input, select, textarea {
     font-size: 1rem;
 }
 
-input:focus, select:focus, textarea:focus {
+input:focus,
+select:focus,
+textarea:focus {
     outline: none;
     border-color: #8b5cf6;
 }
@@ -170,7 +174,8 @@ table {
     margin-top: 1rem;
 }
 
-table th, table td {
+table th,
+table td {
     padding: 1rem;
     text-align: left;
     border-bottom: 1px solid #374151;
@@ -192,7 +197,9 @@ img {
     height: auto;
 }
 
-.queue-item, .search-result, .event-card {
+.queue-item,
+.search-result,
+.event-card {
     display: flex;
     align-items: center;
     gap: 1rem;
@@ -202,21 +209,25 @@ img {
     margin-bottom: 1rem;
 }
 
-.queue-item img, .search-result img {
+.queue-item img,
+.search-result img {
     width: 60px;
     height: 60px;
     object-fit: cover;
 }
 
-.queue-item div, .search-result div {
+.queue-item div,
+.search-result div {
     flex: 1;
 }
 
-.queue-item div p, .search-result div p {
+.queue-item div p,
+.search-result div p {
     margin: 0.25rem 0;
 }
 
-.queue-item div p:first-child, .search-result div p:first-child {
+.queue-item div p:first-child,
+.search-result div p:first-child {
     font-weight: bold;
     font-size: 1.1rem;
 }
@@ -234,7 +245,9 @@ img {
     color: #8b5cf6;
 }
 
-#liveActivity, #activityFeed, #updateFeed {
+#liveActivity,
+#activityFeed,
+#updateFeed {
     background: #1f2937;
     border-radius: 8px;
     padding: 1rem;
@@ -242,7 +255,9 @@ img {
     overflow-y: auto;
 }
 
-#liveActivity p, #activityFeed p, #updateFeed p {
+#liveActivity p,
+#activityFeed p,
+#updateFeed p {
     margin-bottom: 0.5rem;
     padding: 0.5rem;
     background: rgba(139, 92, 246, 0.1);
@@ -288,35 +303,38 @@ footer a:hover {
         gap: 1rem;
         text-align: center;
     }
-    
+
     header nav div:last-child {
         flex-wrap: wrap;
         justify-content: center;
     }
-    
+
     main {
         padding: 1rem;
     }
-    
+
     section {
         padding: 1rem;
     }
-    
-    .queue-item, .search-result {
+
+    .queue-item,
+    .search-result {
         flex-direction: column;
         text-align: center;
     }
-    
-    .queue-item img, .search-result img {
+
+    .queue-item img,
+    .search-result img {
         width: 80px;
         height: 80px;
     }
-    
+
     table {
         font-size: 0.9rem;
     }
-    
-    table th, table td {
+
+    table th,
+    table td {
         padding: 0.5rem;
     }
 }
@@ -325,21 +343,22 @@ footer a:hover {
     header nav div:first-child h1 {
         font-size: 2rem;
     }
-    
+
     header nav a {
         padding: 0.5rem 1rem;
         font-size: 0.9rem;
     }
-    
+
     section h2 {
         font-size: 1.5rem;
     }
-    
+
     table {
         font-size: 0.8rem;
     }
-    
-    .queue-item, .search-result {
+
+    .queue-item,
+    .search-result {
         padding: 0.75rem;
     }
 }

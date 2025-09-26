@@ -2,11 +2,20 @@ Server URL: https://startup.beatqueue.click/
 
 Server IP: http://44.208.222.219/
 
+To use Prettier (cd project root):
+Check what needs formatting:
+bashprettier --check .
+Format all files automatically:
+bashprettier --write .
+Format only specific file types:
+bashprettier --write "_.html" "_.css"
+
 ## HTML Development Notes
 
 Created 4 main pages:
+
 - index.html - login page where DJs can sign in or register
-- dashboard.html - main DJ control panel for creating/managing events  
+- dashboard.html - main DJ control panel for creating/managing events
 - event.html - DJ view of live events with song queue management
 - join.html - guest page where people can join events and request songs
 

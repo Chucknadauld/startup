@@ -1,247 +1,332 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Live Event - BeatQueue</title>
-    <link rel="stylesheet" href="../main.css">
-</head>
-<body>
-    <header>
-        <nav>
-            <div>
-                <h1>Friday Night Set - Live</h1>
-                <p>DJ: <span>DJ Awesome</span> | Connected: <span id="liveUserCount">23</span> users</p>
-            </div>
-            <div>
-                <a href="../index.html">Home</a>
-                <a href="dashboard.html">Dashboard</a>
-                <a href="event.html">Live Event</a>
-                <a href="join.html">Join Event</a>
-            </div>
-        </nav>
-    </header>
-
-    <main>
-        <section>
-            <h2>Now Playing</h2>
-            <div id="currentTrack">
-                <img src="../images/placeholder.png" alt="Album Cover" width="200" height="200">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Live Event - BeatQueue</title>
+        <link rel="stylesheet" href="../main.css" />
+    </head>
+    <body>
+        <header>
+            <nav>
                 <div>
-                    <h3>Animals</h3>
-                    <p>Martin Garrix</p>
-                    <p>Source: Apple Music</p>
-                    <div>
-                        <progress value="45" max="180"></progress>
-                        <span>1:23 / 3:00</span>
-                    </div>
-                    <p>Requested by: MusicFan42 | Votes: 18</p>
+                    <h1>Friday Night Set - Live</h1>
+                    <p>
+                        DJ: <span>DJ Awesome</span> | Connected:
+                        <span id="liveUserCount">23</span> users
+                    </p>
                 </div>
-            </div>
-            
-            <div id="djControls">
-                <button>Skip Track</button>
-                <button>Mark as Played</button>
-                <button>Add to Favorites</button>
-            </div>
-        </section>
+                <div>
+                    <a href="../index.html">Home</a>
+                    <a href="dashboard.html">Dashboard</a>
+                    <a href="event.html">Live Event</a>
+                    <a href="join.html">Join Event</a>
+                </div>
+            </nav>
+        </header>
 
-        <section>
-            <h2>Music Search</h2>
-            <div>
-                <input type="text" id="searchQuery" placeholder="Search for songs..." value="titanium remix">
-                <select id="musicSource">
-                    <option value="apple">Apple Music</option>
-                    <option value="soundcloud">SoundCloud</option>
-                    <option value="both">Both Sources</option>
-                </select>
-                <button id="searchBtn">Search</button>
-                
-                <div id="searchResults">
-                    <h4>Search Results from Apple Music API:</h4>
+        <main>
+            <section>
+                <h2>Now Playing</h2>
+                <div id="currentTrack">
+                    <img
+                        src="../images/placeholder.png"
+                        alt="Album Cover"
+                        width="200"
+                        height="200"
+                    />
                     <div>
-                        <img src="https://via.placeholder.com/60x60" alt="Album Art" width="60" height="60">
+                        <h3>Animals</h3>
+                        <p>Martin Garrix</p>
+                        <p>Source: Apple Music</p>
                         <div>
-                            <p><strong>Titanium</strong> - David Guetta ft. Sia</p>
-                            <p>Album: Nothing But The Beat</p>
-                            <button>Add to Queue</button>
+                            <progress value="45" max="180"></progress>
+                            <span>1:23 / 3:00</span>
+                        </div>
+                        <p>Requested by: MusicFan42 | Votes: 18</p>
+                    </div>
+                </div>
+
+                <div id="djControls">
+                    <button>Skip Track</button>
+                    <button>Mark as Played</button>
+                    <button>Add to Favorites</button>
+                </div>
+            </section>
+
+            <section>
+                <h2>Music Search</h2>
+                <div>
+                    <input
+                        type="text"
+                        id="searchQuery"
+                        placeholder="Search for songs..."
+                        value="titanium remix"
+                    />
+                    <select id="musicSource">
+                        <option value="apple">Apple Music</option>
+                        <option value="soundcloud">SoundCloud</option>
+                        <option value="both">Both Sources</option>
+                    </select>
+                    <button id="searchBtn">Search</button>
+
+                    <div id="searchResults">
+                        <h4>Search Results from Apple Music API:</h4>
+                        <div>
+                            <img
+                                src="https://via.placeholder.com/60x60"
+                                alt="Album Art"
+                                width="60"
+                                height="60"
+                            />
+                            <div>
+                                <p>
+                                    <strong>Titanium</strong> - David Guetta ft.
+                                    Sia
+                                </p>
+                                <p>Album: Nothing But The Beat</p>
+                                <button>Add to Queue</button>
+                            </div>
+                        </div>
+                        <div>
+                            <img
+                                src="https://via.placeholder.com/60x60"
+                                alt="Album Art"
+                                width="60"
+                                height="60"
+                            />
+                            <div>
+                                <p>
+                                    <strong>Titanium (Alesso Remix)</strong> -
+                                    David Guetta
+                                </p>
+                                <p>SoundCloud Exclusive</p>
+                                <button>Add to Queue</button>
+                            </div>
+                        </div>
+                        <div>
+                            <img
+                                src="https://via.placeholder.com/60x60"
+                                alt="Album Art"
+                                width="60"
+                                height="60"
+                            />
+                            <div>
+                                <p>
+                                    <strong>Titanium (Festival Mix)</strong> -
+                                    David Guetta
+                                </p>
+                                <p>Bootleg - SoundCloud</p>
+                                <button>Add to Queue</button>
+                            </div>
                         </div>
                     </div>
+                </div>
+            </section>
+
+            <section>
+                <h2>Song Queue</h2>
+                <div id="songQueue">
                     <div>
-                        <img src="https://via.placeholder.com/60x60" alt="Album Art" width="60" height="60">
+                        <span>#1</span>
+                        <img
+                            src="https://via.placeholder.com/50x50"
+                            alt="Album Art"
+                            width="50"
+                            height="50"
+                        />
                         <div>
-                            <p><strong>Titanium (Alesso Remix)</strong> - David Guetta</p>
-                            <p>SoundCloud Exclusive</p>
-                            <button>Add to Queue</button>
+                            <p><strong>Levels</strong> - Avicii</p>
+                            <p>Requested by: Guest_847</p>
+                            <p>Source: Apple Music</p>
+                        </div>
+                        <div>
+                            <span>12 votes</span>
+                            <button>▲</button>
+                            <button>Remove</button>
                         </div>
                     </div>
+
                     <div>
-                        <img src="https://via.placeholder.com/60x60" alt="Album Art" width="60" height="60">
+                        <span>#2</span>
+                        <img
+                            src="https://via.placeholder.com/50x50"
+                            alt="Album Art"
+                            width="50"
+                            height="50"
+                        />
                         <div>
-                            <p><strong>Titanium (Festival Mix)</strong> - David Guetta</p>
-                            <p>Bootleg - SoundCloud</p>
-                            <button>Add to Queue</button>
+                            <p><strong>One More Time</strong> - Daft Punk</p>
+                            <p>Requested by: MusicLover23</p>
+                            <p>Source: Apple Music</p>
+                        </div>
+                        <div>
+                            <span>8 votes</span>
+                            <button>▲</button>
+                            <button>Remove</button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <span>#3</span>
+                        <img
+                            src="https://via.placeholder.com/50x50"
+                            alt="Album Art"
+                            width="50"
+                            height="50"
+                        />
+                        <div>
+                            <p>
+                                <strong>Bangarang (VIP Mix)</strong> - Skrillex
+                            </p>
+                            <p>Requested by: DubstepKing</p>
+                            <p>Source: SoundCloud</p>
+                        </div>
+                        <div>
+                            <span>6 votes</span>
+                            <button>▲</button>
+                            <button>Remove</button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <span>#4</span>
+                        <img
+                            src="https://via.placeholder.com/50x50"
+                            alt="Album Art"
+                            width="50"
+                            height="50"
+                        />
+                        <div>
+                            <p><strong>Strobe</strong> - Deadmau5</p>
+                            <p>Requested by: ProgHouseFan</p>
+                            <p>Source: Apple Music</p>
+                        </div>
+                        <div>
+                            <span>4 votes</span>
+                            <button>▲</button>
+                            <button>Remove</button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <span>#5</span>
+                        <img
+                            src="https://via.placeholder.com/50x50"
+                            alt="Album Art"
+                            width="50"
+                            height="50"
+                        />
+                        <div>
+                            <p><strong>Clarity (Zedd Remix)</strong> - Zedd</p>
+                            <p>Requested by: EDMFan2024</p>
+                            <p>Source: Apple Music</p>
+                        </div>
+                        <div>
+                            <span>2 votes</span>
+                            <button>▲</button>
+                            <button>Remove</button>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <section>
-            <h2>Song Queue</h2>
-            <div id="songQueue">
+            <section>
+                <h2>Live Activity Feed</h2>
+                <div id="liveActivity">
+                    <p>Recent Activity:</p>
+                    <div id="activityFeed">
+                        <p>
+                            <strong>Guest_847</strong> added "Levels" by Avicii
+                        </p>
+                        <p>
+                            <strong>MusicLover23</strong> upvoted "One More
+                            Time"
+                        </p>
+                        <p>
+                            <strong>DJ Awesome</strong> marked "Animals" as now
+                            playing
+                        </p>
+                        <p><strong>RaveFan99</strong> joined the event</p>
+                        <p>"Levels" reached 10+ votes</p>
+                        <p>
+                            <strong>DanceQueen</strong> upvoted "Bangarang (VIP
+                            Mix)"
+                        </p>
+                        <p>
+                            <strong>TechnoLover</strong> added "Strobe" by
+                            Deadmau5
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2>Event Statistics</h2>
                 <div>
-                    <span>#1</span>
-                    <img src="https://via.placeholder.com/50x50" alt="Album Art" width="50" height="50">
                     <div>
-                        <p><strong>Levels</strong> - Avicii</p>
-                        <p>Requested by: Guest_847</p>
-                        <p>Source: Apple Music</p>
+                        <h3>Database Analytics</h3>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Metric</th>
+                                    <th>Value</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Total Songs Added:</td>
+                                    <td>15</td>
+                                </tr>
+                                <tr>
+                                    <td>Songs Played:</td>
+                                    <td>4</td>
+                                </tr>
+                                <tr>
+                                    <td>Total Votes Cast:</td>
+                                    <td>42</td>
+                                </tr>
+                                <tr>
+                                    <td>Peak Users:</td>
+                                    <td>8</td>
+                                </tr>
+                                <tr>
+                                    <td>Event Duration:</td>
+                                    <td>2h 15m</td>
+                                </tr>
+                                <tr>
+                                    <td>Apple Music Requests:</td>
+                                    <td>32</td>
+                                </tr>
+                                <tr>
+                                    <td>SoundCloud Requests:</td>
+                                    <td>15</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
+
                     <div>
-                        <span>12 votes</span>
-                        <button>▲</button>
-                        <button>Remove</button>
+                        <h3>Service Status</h3>
+                        <p>
+                            Music Services:
+                            <span id="musicStatus">Connected</span>
+                        </p>
+                        <p>Database: <span id="dbStatus">Connected</span></p>
                     </div>
                 </div>
+            </section>
+        </main>
 
-                <div>
-                    <span>#2</span>
-                    <img src="https://via.placeholder.com/50x50" alt="Album Art" width="50" height="50">
-                    <div>
-                        <p><strong>One More Time</strong> - Daft Punk</p>
-                        <p>Requested by: MusicLover23</p>
-                        <p>Source: Apple Music</p>
-                    </div>
-                    <div>
-                        <span>8 votes</span>
-                        <button>▲</button>
-                        <button>Remove</button>
-                    </div>
-                </div>
-
-                <div>
-                    <span>#3</span>
-                    <img src="https://via.placeholder.com/50x50" alt="Album Art" width="50" height="50">
-                    <div>
-                        <p><strong>Bangarang (VIP Mix)</strong> - Skrillex</p>
-                        <p>Requested by: DubstepKing</p>
-                        <p>Source: SoundCloud</p>
-                    </div>
-                    <div>
-                        <span>6 votes</span>
-                        <button>▲</button>
-                        <button>Remove</button>
-                    </div>
-                </div>
-
-                <div>
-                    <span>#4</span>
-                    <img src="https://via.placeholder.com/50x50" alt="Album Art" width="50" height="50">
-                    <div>
-                        <p><strong>Strobe</strong> - Deadmau5</p>
-                        <p>Requested by: ProgHouseFan</p>
-                        <p>Source: Apple Music</p>
-                    </div>
-                    <div>
-                        <span>4 votes</span>
-                        <button>▲</button>
-                        <button>Remove</button>
-                    </div>
-                </div>
-
-                <div>
-                    <span>#5</span>
-                    <img src="https://via.placeholder.com/50x50" alt="Album Art" width="50" height="50">
-                    <div>
-                        <p><strong>Clarity (Zedd Remix)</strong> - Zedd</p>
-                        <p>Requested by: EDMFan2024</p>
-                        <p>Source: Apple Music</p>
-                    </div>
-                    <div>
-                        <span>2 votes</span>
-                        <button>▲</button>
-                        <button>Remove</button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section>
-            <h2>Live Activity Feed</h2>
-            <div id="liveActivity">
-                <p>Recent Activity:</p>
-                <div id="activityFeed">
-                    <p><strong>Guest_847</strong> added "Levels" by Avicii</p>
-                    <p><strong>MusicLover23</strong> upvoted "One More Time"</p>
-                    <p><strong>DJ Awesome</strong> marked "Animals" as now playing</p>
-                    <p><strong>RaveFan99</strong> joined the event</p>
-                    <p>"Levels" reached 10+ votes</p>
-                    <p><strong>DanceQueen</strong> upvoted "Bangarang (VIP Mix)"</p>
-                    <p><strong>TechnoLover</strong> added "Strobe" by Deadmau5</p>
-                </div>
-            </div>
-        </section>
-
-        <section>
-            <h2>Event Statistics</h2>
+        <footer>
             <div>
-                <div>
-                    <h3>Database Analytics</h3>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Metric</th>
-                                <th>Value</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>Total Songs Added:</td>
-                            <td>15</td>
-                        </tr>
-                        <tr>
-                            <td>Songs Played:</td>
-                            <td>4</td>
-                        </tr>
-                        <tr>
-                            <td>Total Votes Cast:</td>
-                            <td>42</td>
-                        </tr>
-                        <tr>
-                            <td>Peak Users:</td>
-                            <td>8</td>
-                        </tr>
-                        <tr>
-                            <td>Event Duration:</td>
-                            <td>2h 15m</td>
-                        </tr>
-                        <tr>
-                            <td>Apple Music Requests:</td>
-                            <td>32</td>
-                        </tr>
-                        <tr>
-                            <td>SoundCloud Requests:</td>
-                            <td>15</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-                
-                <div>
-                    <h3>Service Status</h3>
-                    <p>Music Services: <span id="musicStatus">Connected</span></p>
-                    <p>Database: <span id="dbStatus">Connected</span></p>
-                </div>
+                <p>&copy; 2025 BeatQueue - Built by Chuck Nadauld</p>
+                <p>
+                    <a href="https://github.com/Chucknadauld/startup"
+                        >View on GitHub</a
+                    >
+                </p>
             </div>
-        </section>
-    </main>
-
-    <footer>
-        <div>
-            <p>&copy; 2025 BeatQueue - Built by Chuck Nadauld</p>
-            <p><a href="https://github.com/Chucknadauld/startup">View on GitHub</a></p>
-        </div>
-    </footer>
-</body>
+        </footer>
+    </body>
 </html>
