@@ -8,13 +8,14 @@ prettier --check .
 Format all files automatically:
 prettier --write .
 Format only specific file types:
-prettier --write "*.html" "*.css"
+prettier --write "_.html" "_.css"
 
 ## HTML Development Notes
 
 Created 4 main pages:
+
 - index.html - login page where DJs can sign in or register
-- dashboard.html - main DJ control panel for creating/managing events  
+- dashboard.html - main DJ control panel for creating/managing events
 - event.html - DJ view of live events with song queue management
 - join.html - guest page where people can join events and request songs
 
