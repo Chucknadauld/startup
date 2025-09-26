@@ -33,7 +33,7 @@ This is the main interface. It'll show the event name, a list of requested songs
 
 I am going to use the required technologies in the following ways:
 
-- **HTML:** The structure will be built with semantic HTML5—one page for login and another for the main app interface.
+- **HTML:** The structure will be built with semantic HTML5—multiple pages including login/registration, dashboard, live event management, and guest participation interfaces.
 - **CSS:** The styling will be a clean, responsive dark-mode UI built with standard CSS. It needs to look good on a laptop in a dark room and on a guest's phone. I'll add some simple transitions for a smoother feel.
 - **React:** - Provides login, event dashboard, song queue, song, music search, and use of React for routing and components.
 - **Service** - Backend service with endpoints for:
@@ -53,24 +53,15 @@ I am going to use the required technologies in the following ways:
    ```json
    {
      "hostname": "YourMongoDbAccount.xiu1cqz.mongodb.net",
-     "userName": "YourMongoDbUsername",
+     "userName": "YourMongoDbUsername", 
      "password": "YourMongoDbPassword"
    }
    ```
 
-1. NPM install both the frontend and backend dependencies.
+1. Use the deployment script to deploy BeatQueue to an EC2 instance. You will need the PEM key in order to run the script.
 
    ```sh
-   npm install
-   cd ui
-   npm install
-   cd ..
-   ```
-
-1. Use the `deploy.sh` shell script to deploy Voter to an EC2 instance. You will need the PEM key in order to run the script.
-
-   ```sh
-   ./deploy.sh -k ~/keys/yourkeyhere.pem -h yourdomainnamehere.click
+   ./scripts/deployFiles.sh -k ~/keys/yourkeyhere.pem -h yourdomainnamehere.click
    ```
 
 1. Verify that the application is running on the domain.
@@ -79,16 +70,13 @@ I am going to use the required technologies in the following ways:
    curl startup.cs260.click
    ```
 
-1. **Optional**: If you want to modify the candidates that are currently voted on then alter `finalists.json`. The format of the file is as follows:
+## HTML deliverable
 
-   ```json
-   {
-     "candidate": [{ "name": "Meg", "url": "https://game.com", "votes": 0, "id": "game" }]
-   }
-   ```
+For this deliverable I built out the structure of my application using HTML.
 
-   You can update the candidates with the following endpoint call:
-
-   ```sh
-   curl -X PUT localhost:4000/api/candidate -H "Content-Type:application/json" --data '@finalists.json'
-   ```
+- [x] **HTML pages** - Four HTML pages: main login/registration page (`index.html`), DJ dashboard (`pages/dashboard.html`), live event management (`pages/event.html`), and guest participation (`pages/join.html`).
+- [x] **Links** - Navigation links between all pages work correctly. The main page links to all other sections.
+- [x] **Text** - All pages have proper textual content including form labels, event information, song details, and user status information.
+- [x] **Images** - Placeholder images are included for DJ profiles, album covers, and design mockups.
+- [x] **DB/Login** - Login and registration forms on main page. Dashboard shows event data, song queues, and user statistics that will be pulled from the database.
+- [x] **WebSocket** - Live activity feeds, real-time vote counts, and connected user counts represent where WebSocket updates will happen.
