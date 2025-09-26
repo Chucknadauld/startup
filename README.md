@@ -29,23 +29,28 @@ This is the main interface. It'll show the event name, a list of requested songs
 - A simple upvote feature lets the crowd push the most popular requests to the top
 - The DJ has final say and can manage the queue by removing tracks or marking them as played
 
-### Technology Specification
+### Technologies
 
-Here's the tech stack and how each part will be used:
+I am going to use the required technologies in the following ways:
 
-*   **HTML:** The structure will be built with semantic HTML5—one page for login and another for the main app interface.
-*   **CSS:** The styling will be a clean, responsive dark-mode UI built with standard CSS. It needs to look good on a laptop in a dark room and on a guest's phone. I'll add some simple transitions for a smoother feel.
-*   **React:** The front end will be a Single Page App (SPA) built with React.
-    *   **Components:** I'll break the UI into components like `Login`, `EventDashboard`, `SongQueue`, `Song`, and a `MusicSearch` component that can toggle between the two music sources.
-    *   **Routing:** I'll use React Router to handle the views. The `/` route will be for auth, and a protected route like `/event/:eventId` will show the live queue.
-*   **Web Service (Backend):** I'll build the backend with Node.js and Express to run the core logic via a REST API.
+- **HTML:** The structure will be built with semantic HTML5—one page for login and another for the main app interface.
+- **CSS:** The styling will be a clean, responsive dark-mode UI built with standard CSS. It needs to look good on a laptop in a dark room and on a guest's phone. I'll add some simple transitions for a smoother feel.
+- **React:** The front end will be a Single Page App (SPA) built with React.
+  - I'll break the UI into components like:
+    - `Login`
+    - `EventDashboard`
+    - `SongQueue`
+    - `Song`
+    - `MusicSearch`
+  - I'll use React Router to handle the views. The `/` route will be for auth, and a protected route like `/event/:eventId` will show the live queue.
+- **Web Service (Backend):** I'll build the backend with Node.js and Express to run the core logic via a REST API.
     *   **Endpoints:**
         *   `/api/auth/register` & `/api/auth/login`
         *   `/api/events` (for creating/managing rooms)
         *   `/api/queue/:eventId` (for managing a room's queue)
         *   `/api/search` (e.g., `?q=term&source=apple`)
     *   **Third-Party APIs:** My service will call the **Apple Music API** and the **SoundCloud API**. This lets users pull in both official tracks and the underground remixes that are essential for a good set.
-*   **Database:** I'll use MongoDB to store the data.
+- **Database:** I'll use MongoDB to store the data.
     *   **Collections:** A `users` collection for login info (hashed passwords, of course) and an `events` collection to store each room's data and its song queue.
-*   **WebSocket:** For the real-time updates, I'll use **Socket.IO**. When someone adds or upvotes a song, the server will emit an event to all clients in that room so the UI updates instantly.
+- **WebSocket:** For the real-time updates, I'll use **Socket.IO**. When someone adds or upvotes a song, the server will emit an event to all clients in that room so the UI updates instantly.
 
