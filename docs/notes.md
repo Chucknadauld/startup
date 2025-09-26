@@ -25,3 +25,15 @@ Progress:
 -I'm still using placeholder images for now but the structure is there for album covers and profile pics.
 -The login forms are set up for both DJ registration and guest access. I also built out tables to show how the database info would be displayed like event stats, song queues, voting data.
 -I added sections for live updates and a chat to show where the WebSocket stuff will go later. It should be easy to connect the real-time features once I get to that part.
+
+## CSS Development Notes
+
+Styling Progress:
+
+- Created a dark theme with purple accent colors that works well for DJ/music apps
+- Used CSS Grid and Flexbox for responsive layouts that work on all screen sizes
+- Added hover effects and transitions for better user experience
+- Styled all components: event cards, song queues, search results, tables, forms
+- Implemented mobile-first responsive design with breakpoints at 768px and 480px
+- Used CSS custom properties and consistent spacing throughout
+- Made sure images and buttons are properly sized and accessible
