@@ -35,20 +35,12 @@ I am going to use the required technologies in the following ways:
 
 - **HTML:** The structure will be built with semantic HTML5—one page for login and another for the main app interface.
 - **CSS:** The styling will be a clean, responsive dark-mode UI built with standard CSS. It needs to look good on a laptop in a dark room and on a guest's phone. I'll add some simple transitions for a smoother feel.
-- **React:** The front end will be a Single Page App (SPA) built with React.
-  - I'll break the UI into components like:
-    - `Login`
-    - `EventDashboard`
-    - `SongQueue`
-    - `Song`
-    - `MusicSearch`
-  - I'll use React Router to handle the views. The `/` route will be for auth, and a protected route like `/event/:eventId` will show the live queue.
-- **Web Service (Backend):** I'll build the backend with Node.js and Express to run the core logic via a REST API.
-    *   **Endpoints:**
-        *   `/api/auth/register` & `/api/auth/login`
-        *   `/api/events` (for creating/managing rooms)
-        *   `/api/queue/:eventId` (for managing a room's queue)
-        *   `/api/search` (e.g., `?q=term&source=apple`)
+- **React:** - Provides login, event dashboard, song queue, song, music search, and use of React for routing and components.
+- **Service** - Backend service with endpoints for:
+    - `/api/auth/register` & `/api/auth/login`
+    - `/api/events` (for creating/managing rooms)
+    - `/api/queue/:eventId` (for managing a room's queue)
+    - `/api/search` (e.g., `?q=term&source=apple`)
     *   **Third-Party APIs:** My service will call the **Apple Music API** and the **SoundCloud API**. This lets users pull in both official tracks and the underground remixes that are essential for a good set.
 - **Database:** I'll use MongoDB to store the data.
     *   **Collections:** A `users` collection for login info (hashed passwords, of course) and an `events` collection to store each room's data and its song queue.
