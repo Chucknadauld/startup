@@ -37,11 +37,11 @@ I am going to use the required technologies in the following ways:
 - **CSS:** The styling will be a clean, responsive dark-mode UI built with standard CSS. It needs to look good on a laptop in a dark room and on a guest's phone. I'll add some simple transitions for a smoother feel.
 - **React:** - Provides login, event dashboard, song queue, song, music search, and use of React for routing and components.
 - **Service** - Backend service with endpoints for:
-    - `/api/auth/register` & `/api/auth/login`
-    - `/api/events` (for creating/managing rooms)
-    - `/api/queue/:eventId` (for managing a room's queue)
-    - `/api/search` (e.g., `?q=term&source=apple`)
-    *   **Third-Party APIs:** My service will call the **Apple Music API** and the **SoundCloud API**. This lets users pull in both official tracks and the underground remixes that are essential for a good set.
+    - register
+    - login
+    - events
+    - eventId
+    - search
 - **Database:** I'll use MongoDB to store the data.
     *   **Collections:** A `users` collection for login info (hashed passwords, of course) and an `events` collection to store each room's data and its song queue.
 - **WebSocket:** For the real-time updates, I'll use **Socket.IO**. When someone adds or upvotes a song, the server will emit an event to all clients in that room so the UI updates instantly.
