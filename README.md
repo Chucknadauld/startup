@@ -80,3 +80,14 @@ For this deliverable I built out the structure of my application using HTML.
 - [x] **Images** - Placeholder images are included for DJ profiles, album covers, and design mockups.
 - [x] **DB/Login** - Login and registration forms on main page. Dashboard shows event data, song queues, and user statistics that will be pulled from the database.
 - [x] **WebSocket** - Live activity feeds, real-time vote counts, and connected user counts represent where WebSocket updates will happen.
+
+## CSS deliverable
+
+For this deliverable I properly styled the application into its final appearance.
+
+- [x] **Header, footer, and main content body** - Dark theme, purple gradient header, structured layout
+- [x] **Navigation elements** - Navigation with hover effects and responsive design
+- [x] **Responsive to window resizing** - Works on mobile, tablet, and desktop
+- [x] **Application elements** - Event cards, queue items, search results, forms, tables all properly styled
+- [x] **Application text content** - Consistent typography with purple color scheme and proper hierarchy
+- [x] **Application images** - Styled with rounded corners, proper sizing, and album art placeholders
