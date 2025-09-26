@@ -1,4 +1,6 @@
-# BeatQueue: Real-Time Collaborative Playlists
+# BeatQueue
+
+## Specification Deliverable
 
 ### Elevator Pitch
 
