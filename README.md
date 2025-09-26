@@ -42,7 +42,6 @@ I am going to use the required technologies in the following ways:
     - events
     - eventId
     - search
-- **Database:** I'll use MongoDB to store the data.
-    *   **Collections:** A `users` collection for login info (hashed passwords, of course) and an `events` collection to store each room's data and its song queue.
+- **DB/Login** - Stores user data, events (each room's data and song queue). Credentials securely stored in database. Can't access unless authenticated.
 - **WebSocket:** For the real-time updates, I'll use **Socket.IO**. When someone adds or upvotes a song, the server will emit an event to all clients in that room so the UI updates instantly.
 
