@@ -2,6 +2,9 @@ Server URL: https://startup.beatqueue.click/
 
 Server IP: http://44.208.222.219/
 
+To deploy:
+./scripts/deployFiles.sh -k ~/keys/production.pem -h startup.beatqueue.click
+
 To use Prettier (cd project root):
 Check what needs formatting:
 prettier --check .
