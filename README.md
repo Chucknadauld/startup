@@ -10,13 +10,13 @@ BeatQueue is a web app designed to solve one of the biggest headaches for perfor
 
 **1. Login Screen**
 
-![Login Screen Sketch](BeatQueue.png)
+![Login Screen Sketch](images/BeatQueue.png)
 
 A minimal login/registration page. Just the app name, inputs for email/password, and a login button.
 
 **2. Main Event Screen (DJ View)**
 
-![Main Event Screen Sketch](c.png)
+![Main Event Screen Sketch](images/c.png)
 
 This is the main interface. It'll show the event name, a list of requested songs with their upvote counts, and controls for the DJ to manage the queue. The search bar will have a clear toggle to switch between searching Apple Music and SoundCloud.
 
