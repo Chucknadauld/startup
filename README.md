@@ -22,12 +22,12 @@ This is the main interface. It'll show the event name, a list of requested songs
 
 ### Key Features
 
-- **User Auth:** Standard, secure login and registration for DJs.
-- **Live Rooms:** DJs can spin up a new event room with a unique, shareable URL.
-- **Real-Time Queue:** The playlist is collaborative and updates for everyone instantly. No page refreshes needed.
-- **Multi-Source Search:** Guests can pull tracks from Apple Music for official releases and SoundCloud for all the essential remixes and bootlegs.
-- **Voting System:** A simple upvote feature lets the crowd push the most popular requests to the top.
-- **DJ Control:** The DJ has final say and can manage the queue by removing tracks or marking them as played.
+- Standard, secure login and registration for DJs.
+- DJs can spin up a new event room with a unique, shareable URL.
+- The playlist is collaborative and updates for everyone instantly. No page refreshes needed.
+- Guests can pull tracks from Apple Music for official releases and SoundCloud for all the essential remixes and bootlegs.
+- A simple upvote feature lets the crowd push the most popular requests to the top.
+- The DJ has final say and can manage the queue by removing tracks or marking them as played.
 
 ### Technology Specification
 
