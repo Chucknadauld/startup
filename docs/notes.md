@@ -1,3 +1,5 @@
+Server URL: https://startup.beatqueue.click/
+
 Server IP: http://44.208.222.219/
 
 ## HTML Development Notes
