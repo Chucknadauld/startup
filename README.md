@@ -43,5 +43,5 @@ I am going to use the required technologies in the following ways:
     - eventId
     - search
 - **DB/Login** - Stores user data, events (each room's data and song queue). Credentials securely stored in database. Can't access unless authenticated.
-- **WebSocket:** For the real-time updates, I'll use **Socket.IO**. When someone adds or upvotes a song, the server will emit an event to all clients in that room so the UI updates instantly.
+- **WebSocket:** - When a user add or upvotes a song, it's broadcast to all other users. 
 
