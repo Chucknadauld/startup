@@ -339,6 +339,202 @@ footer a:hover {
     }
 }
 
+#currentTrack {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    background: #374151;
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin-bottom: 1rem;
+}
+
+#currentTrack img {
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+#djControls {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+#searchResults {
+    margin-top: 1rem;
+}
+
+#searchQuery,
+#searchInput {
+    margin-right: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+#musicSource,
+#sourceSelect {
+    margin-right: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.event-card {
+    background: #374151;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    border-left: 4px solid #8b5cf6;
+}
+
+.event-card h3 {
+    color: #8b5cf6;
+    margin-bottom: 1rem;
+}
+
+.event-card p {
+    margin: 0.5rem 0;
+}
+
+.event-card strong {
+    color: #a78bfa;
+}
+
+.event-card div:last-child {
+    margin-top: 1rem;
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.queue-item span:first-child {
+    font-weight: bold;
+    color: #8b5cf6;
+    font-size: 1.2rem;
+    min-width: 30px;
+}
+
+.search-result button,
+.queue-item button {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+}
+
+#nowPlaying {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    background: #374151;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-top: 1rem;
+}
+
+#chatInput {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+#chatInput input {
+    flex: 1;
+}
+
+#chatFeed {
+    background: #1f2937;
+    border-radius: 8px;
+    padding: 1rem;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+#chatFeed p {
+    margin-bottom: 0.5rem;
+    padding: 0.5rem;
+    background: rgba(139, 92, 246, 0.1);
+    border-radius: 4px;
+}
+
+.status-connected {
+    color: #10b981;
+    font-weight: bold;
+}
+
+.status-disconnected {
+    color: #ef4444;
+    font-weight: bold;
+}
+
+input[readonly] {
+    background: #111827;
+    border-color: #6b7280;
+    color: #9ca3af;
+}
+
+input[type="checkbox"] {
+    width: auto;
+    margin-right: 0.5rem;
+}
+
+label input[type="checkbox"] {
+    display: inline;
+}
+
+@media (max-width: 768px) {
+    header nav {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+
+    header nav div:last-child {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    main {
+        padding: 1rem;
+    }
+
+    section {
+        padding: 1rem;
+    }
+
+    .queue-item,
+    .search-result {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .queue-item img,
+    .search-result img {
+        width: 80px;
+        height: 80px;
+    }
+
+    table {
+        font-size: 0.9rem;
+    }
+
+    table th,
+    table td {
+        padding: 0.5rem;
+    }
+
+    #currentTrack,
+    #nowPlaying {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    #djControls {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .event-card div:last-child {
+        justify-content: center;
+    }
+}
+
 @media (max-width: 480px) {
     header nav div:first-child h1 {
         font-size: 2rem;
