@@ -109,3 +109,47 @@ For this deliverable I converted my application to use React and React routing.
   - /join routes to Join
   - 404 NotFound component for invalid routes
 - [x] **Proper component structure** - Organized components in separate directories with modular architecture
+
+## React Phase 2 deliverable (Interactivity)
+
+For this deliverable I made the application interactive using React state and effects. All features are implemented or mocked end-to-end so the app behaves like the final product.
+
+- [x] **Auth + Routing**
+  - App-level auth state with `useState` and `useEffect` persists `userName` in `localStorage`
+  - Gated routes for `Dashboard`, `Event`, and `Join` with a simple `RequireAuth`
+- [x] **Login**
+  - Controlled login/register forms
+  - Mock authentication that saves the username and updates app auth state
+- [x] **Dashboard**
+  - Controlled event creation form
+  - Events list persisted to `localStorage` with End/Remove actions
+- [x] **Event**
+  - Mock search results, add to queue, upvote, remove
+  - Now playing with simple progress timer and Mark as Played/Skip
+  - Lightweight activity feed interval
+  - Queue and now playing persisted to `localStorage`
+- [x] **Join**
+  - Join form stores guest name
+  - Mock search and add to shared queue; vote on items
+  - Simulated connected users counter
+
+### How to run locally
+
+```sh
+npm install
+npm run dev
+```
+
+### Deployment
+
+Bundle and deploy the React app to production using the provided script.
+
+```sh
+./deployReact.sh -k ~/keys/production.pem -h startup.beatqueue.click -s startup
+```
+
+Verify production:
+
+```sh
+curl -I https://startup.beatqueue.click/
+```
