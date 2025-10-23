@@ -1,6 +1,112 @@
 import React from 'react';
 
 export function Event() {
+  const [query, setQuery] = React.useState('titanium remix');
+  const [source, setSource] = React.useState('apple');
+  const [results, setResults] = React.useState([]);
+  const [queue, setQueue] = React.useState([]);
+  const [nowPlaying, setNowPlaying] = React.useState(null);
+  const [progress, setProgress] = React.useState(0);
+  const [activity, setActivity] = React.useState([]);
+
+  React.useEffect(() => {
+    const savedQueue = localStorage.getItem('eventQueue');
+    const savedNow = localStorage.getItem('nowPlaying');
+    if (savedQueue) setQueue(JSON.parse(savedQueue));
+    if (savedNow) setNowPlaying(JSON.parse(savedNow));
+  }, []);
+
+  React.useEffect(() => {
+    localStorage.setItem('eventQueue', JSON.stringify(queue));
+  }, [queue]);
+
+  React.useEffect(() => {
+    localStorage.setItem('nowPlaying', JSON.stringify(nowPlaying));
+  }, [nowPlaying]);
+
+  React.useEffect(() => {
+    const timer = setInterval(() => {
+      if (nowPlaying) {
+        setProgress((p) => {
+          const next = p + 1;
+          if (next >= nowPlaying.duration) {
+            handleMarkPlayed();
+            return 0;
+          }
+          return next;
+        });
+      }
+    }, 1000);
+    return () => clearInterval(timer);
+  }, [nowPlaying]);
+
+  React.useEffect(() => {
+    const feed = setInterval(() => {
+      setActivity((msgs) => {
+        const stamp = new Date().toLocaleTimeString();
+        const next = [{ id: Date.now(), text: `Update at ${stamp}` }, ...msgs];
+        return next.slice(0, 10);
+      });
+    }, 5000);
+    return () => clearInterval(feed);
+  }, []);
+
+  function doSearch() {
+    const base = [
+      { title: 'Titanium', artist: 'David Guetta ft. Sia', album: 'Nothing But The Beat', source: 'apple' },
+      { title: 'Titanium (Alesso Remix)', artist: 'David Guetta', album: 'Single', source: 'soundcloud' },
+      { title: 'Titanium (Festival Mix)', artist: 'David Guetta', album: 'Bootleg', source: 'soundcloud' },
+    ];
+    const filtered = source === 'both' ? base : base.filter(b => b.source === source);
+    const withIds = filtered.map((r, i) => ({ id: `${r.source}-${i}`, ...r }));
+    setResults(withIds);
+  }
+
+  function addToQueue(item) {
+    const qItem = {
+      id: Date.now(),
+      title: item.title,
+      artist: item.artist,
+      source: item.source,
+      votes: 0,
+      addedBy: 'You',
+    };
+    setQueue((q) => [...q, qItem]);
+    setActivity((msgs) => [{ id: Date.now(), text: `Added "${item.title}"` }, ...msgs].slice(0, 10));
+  }
+
+  function upvote(id) {
+    setQueue((q) => q.map(it => (it.id === id ? { ...it, votes: it.votes + 1 } : it)));
+  }
+
+  function removeFromQueue(id) {
+    setQueue((q) => q.filter(it => it.id !== id));
+  }
+
+  function handleSkip() {
+    if (queue.length) {
+      const [next, ...rest] = queue;
+      setNowPlaying({ title: next.title, artist: next.artist, source: next.source, duration: 180 });
+      setQueue(rest);
+      setProgress(0);
+      setActivity((msgs) => [{ id: Date.now(), text: `Now playing "${next.title}"` }, ...msgs].slice(0, 10));
+    } else {
+      setNowPlaying(null);
+      setProgress(0);
+    }
+  }
+
+  function handleMarkPlayed() {
+    setActivity((msgs) => [{ id: Date.now(), text: `Finished "${nowPlaying?.title || ''}"` }, ...msgs].slice(0, 10));
+    handleSkip();
+  }
+
+  function handleFavorite() {
+    if (nowPlaying) {
+      setActivity((msgs) => [{ id: Date.now(), text: `Favorited "${nowPlaying.title}"` }, ...msgs].slice(0, 10));
+    }
+  }
+
   return (
     <main>
       <section>
@@ -13,21 +119,21 @@ export function Event() {
             height="200"
           />
           <div>
-            <h3>Animals</h3>
-            <p>Martin Garrix</p>
-            <p>Source: Apple Music</p>
+            <h3>{nowPlaying ? nowPlaying.title : 'Nothing playing'}</h3>
+            <p>{nowPlaying ? nowPlaying.artist : '—'}</p>
+            <p>Source: {nowPlaying ? (nowPlaying.source === 'apple' ? 'Apple Music' : 'SoundCloud') : '—'}</p>
             <div>
-              <progress value="45" max="180"></progress>
-              <span>1:23 / 3:00</span>
+              <progress value={nowPlaying ? progress : 0} max={nowPlaying ? nowPlaying.duration : 100}></progress>
+              <span>{nowPlaying ? `${Math.floor(progress / 60)}:${String(progress % 60).padStart(2, '0')} / ${Math.floor(nowPlaying.duration / 60)}:${String(nowPlaying.duration % 60).padStart(2, '0')}` : '0:00 / 0:00'}</span>
             </div>
-            <p>Requested by: MusicFan42 | Votes: 18</p>
+            <p>{nowPlaying ? `Requested by: You | Votes: —` : ''}</p>
           </div>
         </div>
 
         <div id="djControls">
-          <button>Skip Track</button>
-          <button>Mark as Played</button>
-          <button>Add to Favorites</button>
+          <button onClick={handleSkip}>Skip Track</button>
+          <button onClick={handleMarkPlayed}>Mark as Played</button>
+          <button onClick={handleFavorite}>Add to Favorites</button>
         </div>
       </section>
 
@@ -38,62 +144,35 @@ export function Event() {
             type="text"
             id="searchQuery"
             placeholder="Search for songs..."
-            defaultValue="titanium remix"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
           />
-          <select id="musicSource">
+          <select id="musicSource" value={source} onChange={(e) => setSource(e.target.value)}>
             <option value="apple">Apple Music</option>
             <option value="soundcloud">SoundCloud</option>
             <option value="both">Both Sources</option>
           </select>
-          <button id="searchBtn">Search</button>
+          <button id="searchBtn" onClick={doSearch}>Search</button>
 
           <div id="searchResults">
-            <h4>Search Results from Apple Music API:</h4>
-            <div className="search-result">
-              <img
-                src="https://via.placeholder.com/60x60"
-                alt="Album Art"
-                width="60"
-                height="60"
-              />
-              <div>
-                <p>
-                  <strong>Titanium</strong> - David Guetta ft. Sia
-                </p>
-                <p>Album: Nothing But The Beat</p>
+            <h4>Search Results:</h4>
+            {results.map((r) => (
+              <div className="search-result" key={r.id}>
+                <img
+                  src="https://via.placeholder.com/60x60"
+                  alt="Album Art"
+                  width="60"
+                  height="60"
+                />
+                <div>
+                  <p>
+                    <strong>{r.title}</strong> - {r.artist}
+                  </p>
+                  <p>{r.source === 'apple' ? 'Apple Music' : 'SoundCloud'}</p>
+                </div>
+                <button onClick={() => addToQueue(r)}>Add to Queue</button>
               </div>
-              <button>Add to Queue</button>
-            </div>
-            <div className="search-result">
-              <img
-                src="https://via.placeholder.com/60x60"
-                alt="Album Art"
-                width="60"
-                height="60"
-              />
-              <div>
-                <p>
-                  <strong>Titanium (Alesso Remix)</strong> - David Guetta
-                </p>
-                <p>SoundCloud Exclusive</p>
-              </div>
-              <button>Add to Queue</button>
-            </div>
-            <div className="search-result">
-              <img
-                src="https://via.placeholder.com/60x60"
-                alt="Album Art"
-                width="60"
-                height="60"
-              />
-              <div>
-                <p>
-                  <strong>Titanium (Festival Mix)</strong> - David Guetta
-                </p>
-                <p>Bootleg - SoundCloud</p>
-              </div>
-              <button>Add to Queue</button>
-            </div>
+            ))}
           </div>
         </div>
       </section>
@@ -101,105 +180,27 @@ export function Event() {
       <section>
         <h2>Song Queue</h2>
         <div id="songQueue">
-          <div className="queue-item">
-            <span>#1</span>
-            <img
-              src="https://via.placeholder.com/50x50"
-              alt="Album Art"
-              width="50"
-              height="50"
-            />
-            <div>
-              <p><strong>Levels</strong> - Avicii</p>
-              <p>Requested by: Guest_847</p>
-              <p>Source: Apple Music</p>
+          {queue.map((item, idx) => (
+            <div className="queue-item" key={item.id}>
+              <span>#{idx + 1}</span>
+              <img
+                src="https://via.placeholder.com/50x50"
+                alt="Album Art"
+                width="50"
+                height="50"
+              />
+              <div>
+                <p><strong>{item.title}</strong> - {item.artist}</p>
+                <p>Requested by: {item.addedBy}</p>
+                <p>Source: {item.source === 'apple' ? 'Apple Music' : 'SoundCloud'}</p>
+              </div>
+              <div className="vote-section">
+                <span>{item.votes} votes</span>
+                <button onClick={() => upvote(item.id)}>▲</button>
+                <button onClick={() => removeFromQueue(item.id)}>Remove</button>
+              </div>
             </div>
-            <div className="vote-section">
-              <span>12 votes</span>
-              <button>▲</button>
-              <button>Remove</button>
-            </div>
-          </div>
-
-          <div className="queue-item">
-            <span>#2</span>
-            <img
-              src="https://via.placeholder.com/50x50"
-              alt="Album Art"
-              width="50"
-              height="50"
-            />
-            <div>
-              <p><strong>One More Time</strong> - Daft Punk</p>
-              <p>Requested by: MusicLover23</p>
-              <p>Source: Apple Music</p>
-            </div>
-            <div className="vote-section">
-              <span>8 votes</span>
-              <button>▲</button>
-              <button>Remove</button>
-            </div>
-          </div>
-
-          <div className="queue-item">
-            <span>#3</span>
-            <img
-              src="https://via.placeholder.com/50x50"
-              alt="Album Art"
-              width="50"
-              height="50"
-            />
-            <div>
-              <p><strong>Bangarang (VIP Mix)</strong> - Skrillex</p>
-              <p>Requested by: DubstepKing</p>
-              <p>Source: SoundCloud</p>
-            </div>
-            <div className="vote-section">
-              <span>6 votes</span>
-              <button>▲</button>
-              <button>Remove</button>
-            </div>
-          </div>
-
-          <div className="queue-item">
-            <span>#4</span>
-            <img
-              src="https://via.placeholder.com/50x50"
-              alt="Album Art"
-              width="50"
-              height="50"
-            />
-            <div>
-              <p><strong>Strobe</strong> - Deadmau5</p>
-              <p>Requested by: ProgHouseFan</p>
-              <p>Source: Apple Music</p>
-            </div>
-            <div className="vote-section">
-              <span>4 votes</span>
-              <button>▲</button>
-              <button>Remove</button>
-            </div>
-          </div>
-
-          <div className="queue-item">
-            <span>#5</span>
-            <img
-              src="https://via.placeholder.com/50x50"
-              alt="Album Art"
-              width="50"
-              height="50"
-            />
-            <div>
-              <p><strong>Clarity (Zedd Remix)</strong> - Zedd</p>
-              <p>Requested by: EDMFan2024</p>
-              <p>Source: Apple Music</p>
-            </div>
-            <div className="vote-section">
-              <span>2 votes</span>
-              <button>▲</button>
-              <button>Remove</button>
-            </div>
-          </div>
+          ))}
         </div>
       </section>
 
@@ -208,13 +209,9 @@ export function Event() {
         <div id="liveActivity">
           <p>Recent Activity:</p>
           <div id="activityFeed">
-            <p><strong>Guest_847</strong> added "Levels" by Avicii</p>
-            <p><strong>MusicLover23</strong> upvoted "One More Time"</p>
-            <p><strong>DJ Awesome</strong> marked "Animals" as now playing</p>
-            <p><strong>RaveFan99</strong> joined the event</p>
-            <p>"Levels" reached 10+ votes</p>
-            <p><strong>DanceQueen</strong> upvoted "Bangarang (VIP Mix)"</p>
-            <p><strong>TechnoLover</strong> added "Strobe" by Deadmau5</p>
+            {activity.map((m) => (
+              <p key={m.id}>{m.text}</p>
+            ))}
           </div>
         </div>
       </section>
@@ -234,31 +231,31 @@ export function Event() {
               <tbody>
                 <tr>
                   <td>Total Songs Added:</td>
-                  <td>15</td>
+                  <td>{queue.length}</td>
                 </tr>
                 <tr>
                   <td>Songs Played:</td>
-                  <td>4</td>
+                  <td>{activity.filter(a => a.text.startsWith('Finished')).length}</td>
                 </tr>
                 <tr>
                   <td>Total Votes Cast:</td>
-                  <td>42</td>
+                  <td>{queue.reduce((sum, it) => sum + it.votes, 0)}</td>
                 </tr>
                 <tr>
                   <td>Peak Users:</td>
-                  <td>8</td>
+                  <td>—</td>
                 </tr>
                 <tr>
                   <td>Event Duration:</td>
-                  <td>2h 15m</td>
+                  <td>—</td>
                 </tr>
                 <tr>
                   <td>Apple Music Requests:</td>
-                  <td>32</td>
+                  <td>{queue.filter(q => q.source === 'apple').length}</td>
                 </tr>
                 <tr>
                   <td>SoundCloud Requests:</td>
-                  <td>15</td>
+                  <td>{queue.filter(q => q.source === 'soundcloud').length}</td>
                 </tr>
               </tbody>
             </table>
