@@ -1,13 +1,72 @@
 import React from 'react';
 
 export function Join() {
+  const [eventCode, setEventCode] = React.useState('');
+  const [guestName, setGuestName] = React.useState('');
+  const [connectedUsers, setConnectedUsers] = React.useState(1);
+  const [searchText, setSearchText] = React.useState('daft punk');
+  const [source, setSource] = React.useState('apple');
+  const [results, setResults] = React.useState([]);
+  const [queue, setQueue] = React.useState([]);
+
+  React.useEffect(() => {
+    const storedGuest = localStorage.getItem('guestName');
+    const savedQueue = localStorage.getItem('eventQueue');
+    if (storedGuest) setGuestName(storedGuest);
+    if (savedQueue) setQueue(JSON.parse(savedQueue));
+  }, []);
+
+  React.useEffect(() => {
+    const t = setInterval(() => {
+      setConnectedUsers((n) => (n < 99 ? n + 1 : 1));
+    }, 8000);
+    return () => clearInterval(t);
+  }, []);
+
+  React.useEffect(() => {
+    localStorage.setItem('eventQueue', JSON.stringify(queue));
+  }, [queue]);
+
+  function handleJoin(e) {
+    e.preventDefault();
+    const name = guestName || 'Guest';
+    localStorage.setItem('guestName', name);
+    setGuestName(name);
+  }
+
+  function doSearch() {
+    const base = [
+      { title: 'One More Time', artist: 'Daft Punk', album: 'Discovery', source: 'apple' },
+      { title: 'Around the World', artist: 'Daft Punk', album: 'Homework', source: 'apple' },
+      { title: 'Robot Rock (Justice Remix)', artist: 'Daft Punk', album: 'Bootleg', source: 'soundcloud' },
+    ];
+    const filtered = source === 'both' ? base : base.filter(b => b.source === source);
+    setResults(filtered.map((r, i) => ({ id: `${r.source}-${i}`, ...r })));
+  }
+
+  function addToQueue(item) {
+    const added = {
+      id: Date.now(),
+      title: item.title,
+      artist: item.artist,
+      source: item.source,
+      votes: 0,
+      addedBy: guestName || 'Guest',
+    };
+    setQueue((q) => [...q, added]);
+  }
+
+  function vote(id) {
+    setQueue((q) => q.map(it => (it.id === id ? { ...it, votes: it.votes + 1 } : it)));
+  }
+
   return (
     <main>
       <section>
         <h2>Join an Event</h2>
         <div>
           <h3>Enter Event Code</h3>
-          <form>
+          <form onSubmit={handleJoin}>
             <div>
               <label htmlFor="eventCode">Event Code:</label>
               <input
@@ -16,6 +75,8 @@ export function Join() {
                 name="eventCode"
                 placeholder="FN2024"
                 required
+                value={eventCode}
+                onChange={(e) => setEventCode(e.target.value)}
               />
             </div>
             <div>
@@ -25,6 +86,8 @@ export function Join() {
                 id="guestName"
                 name="guestName"
                 placeholder="Guest_123"
+                value={guestName}
+                onChange={(e) => setGuestName(e.target.value)}
               />
             </div>
             <button type="submit">Join Event</button>
@@ -38,8 +101,8 @@ export function Join() {
         <h2>Friday Night Set</h2>
         <p>DJ: <strong>DJ Awesome</strong></p>
         <p>Location: Club Downtown</p>
-        <p>Connected as: <span id="userName">Guest_847</span></p>
-        <p>Users online: <span id="onlineUsers">23</span></p>
+        <p>Connected as: <span id="userName">{guestName || 'Not connected'}</span></p>
+        <p>Users online: <span id="onlineUsers">{connectedUsers}</span></p>
 
         <h3>Now Playing</h3>
         <div id="nowPlaying">
@@ -65,76 +128,35 @@ export function Join() {
             type="text"
             id="searchInput"
             placeholder="Search for songs, artists..."
-            defaultValue="daft punk"
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
           />
-          <select id="sourceSelect">
+          <select id="sourceSelect" value={source} onChange={(e) => setSource(e.target.value)}>
             <option value="apple">Apple Music</option>
             <option value="soundcloud">SoundCloud</option>
             <option value="both">Both Sources</option>
           </select>
-          <button id="searchButton">Search</button>
+          <button id="searchButton" onClick={doSearch}>Search</button>
 
           <div id="apiResults">
             <h4>Third-Party API Results:</h4>
-            <div className="search-result">
-              <img
-                src="https://via.placeholder.com/80x80"
-                alt="Album Art"
-                width="80"
-                height="80"
-              />
-              <div>
-                <h5>One More Time</h5>
-                <p>Daft Punk</p>
-                <p>Album: Discovery</p>
-                <p>Source: Apple Music</p>
-                <audio controls>
-                  <source src="#" type="audio/mpeg" />
-                  Preview not available
-                </audio>
+            {results.map((r) => (
+              <div className="search-result" key={r.id}>
+                <img
+                  src="https://via.placeholder.com/80x80"
+                  alt="Album Art"
+                  width="80"
+                  height="80"
+                />
+                <div>
+                  <h5>{r.title}</h5>
+                  <p>{r.artist}</p>
+                  <p>Album: {r.album}</p>
+                  <p>Source: {r.source === 'apple' ? 'Apple Music' : 'SoundCloud'}</p>
+                </div>
+                <button onClick={() => addToQueue(r)}>Add to Queue</button>
               </div>
-              <button>Add to Queue</button>
-            </div>
-
-            <div className="search-result">
-              <img
-                src="https://via.placeholder.com/80x80"
-                alt="Album Art"
-                width="80"
-                height="80"
-              />
-              <div>
-                <h5>Around the World</h5>
-                <p>Daft Punk</p>
-                <p>Album: Homework</p>
-                <p>Source: Apple Music</p>
-                <audio controls>
-                  <source src="#" type="audio/mpeg" />
-                  Preview not available
-                </audio>
-              </div>
-              <button>Add to Queue</button>
-            </div>
-
-            <div className="search-result">
-              <img
-                src="https://via.placeholder.com/80x80"
-                alt="Album Art"
-                width="80"
-                height="80"
-              />
-              <div>
-                <h5>Robot Rock (Justice Remix)</h5>
-                <p>Daft Punk</p>
-                <p>Remix/Bootleg</p>
-                <p>Source: SoundCloud</p>
-                <audio controls>
-                  <source src="#" type="audio/mpeg" />
-                  Preview not available
-                </audio>
-              </div>
-              <button>Add to Queue</button>
-            </div>
+            ))}
           </div>
         </div>
       </section>
@@ -142,100 +164,26 @@ export function Join() {
       <section id="currentQueue">
         <h2>Current Queue</h2>
         <div id="queueList">
-          <div className="queue-item">
-            <span>1.</span>
-            <img
-              src="https://via.placeholder.com/60x60"
-              alt="Album Art"
-              width="60"
-              height="60"
-            />
-            <div>
-              <h4>Levels</h4>
-              <p>Avicii</p>
-              <p>Added by: You (Guest_847)</p>
+          {queue.map((item, idx) => (
+            <div className="queue-item" key={item.id}>
+              <span>{idx + 1}.</span>
+              <img
+                src="https://via.placeholder.com/60x60"
+                alt="Album Art"
+                width="60"
+                height="60"
+              />
+              <div>
+                <h4>{item.title}</h4>
+                <p>{item.artist}</p>
+                <p>Added by: {item.addedBy}</p>
+              </div>
+              <div className="vote-section">
+                <span>{item.votes} votes</span>
+                <button onClick={() => vote(item.id)}>Vote</button>
+              </div>
             </div>
-            <div className="vote-section">
-              <span>12 votes</span>
-              <button disabled>Already Voted</button>
-            </div>
-          </div>
-
-          <div className="queue-item">
-            <span>2.</span>
-            <img
-              src="https://via.placeholder.com/60x60"
-              alt="Album Art"
-              width="60"
-              height="60"
-            />
-            <div>
-              <h4>One More Time</h4>
-              <p>Daft Punk</p>
-              <p>Added by: MusicLover23</p>
-            </div>
-            <div className="vote-section">
-              <span>8 votes</span>
-              <button>Vote</button>
-            </div>
-          </div>
-
-          <div className="queue-item">
-            <span>3.</span>
-            <img
-              src="https://via.placeholder.com/60x60"
-              alt="Album Art"
-              width="60"
-              height="60"
-            />
-            <div>
-              <h4>Bangarang (VIP Mix)</h4>
-              <p>Skrillex</p>
-              <p>Added by: DubstepKing</p>
-            </div>
-            <div className="vote-section">
-              <span>6 votes</span>
-              <button>Vote</button>
-            </div>
-          </div>
-
-          <div className="queue-item">
-            <span>4.</span>
-            <img
-              src="https://via.placeholder.com/60x60"
-              alt="Album Art"
-              width="60"
-              height="60"
-            />
-            <div>
-              <h4>Strobe</h4>
-              <p>Deadmau5</p>
-              <p>Added by: ProgHouseFan</p>
-            </div>
-            <div className="vote-section">
-              <span>4 votes</span>
-              <button>Vote</button>
-            </div>
-          </div>
-
-          <div className="queue-item">
-            <span>5.</span>
-            <img
-              src="https://via.placeholder.com/60x60"
-              alt="Album Art"
-              width="60"
-              height="60"
-            />
-            <div>
-              <h4>Clarity</h4>
-              <p>Zedd</p>
-              <p>Added by: EDMFan2024</p>
-            </div>
-            <div className="vote-section">
-              <span>2 votes</span>
-              <button>Vote</button>
-            </div>
-          </div>
+          ))}
         </div>
       </section>
 
@@ -278,27 +226,27 @@ export function Join() {
               </tr>
               <tr>
                 <td>Your Songs Added</td>
-                <td>2</td>
+                <td>{queue.filter(q => q.addedBy === (guestName || 'Guest')).length}</td>
               </tr>
               <tr>
                 <td>Your Votes Cast</td>
-                <td>4</td>
+                <td>—</td>
               </tr>
               <tr>
                 <td>Total Event Songs</td>
-                <td>15</td>
+                <td>{queue.length}</td>
               </tr>
               <tr>
                 <td>Songs Played So Far</td>
-                <td>4</td>
+                <td>—</td>
               </tr>
               <tr>
                 <td>Event Duration</td>
-                <td>2h 15m</td>
+                <td>—</td>
               </tr>
               <tr>
                 <td>Connected Users</td>
-                <td>23</td>
+                <td>{connectedUsers}</td>
               </tr>
             </tbody>
           </table>
