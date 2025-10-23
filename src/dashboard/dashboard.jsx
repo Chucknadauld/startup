@@ -1,11 +1,67 @@
 import React from 'react';
 
 export function Dashboard() {
+  const [eventName, setEventName] = React.useState('');
+  const [eventLocation, setEventLocation] = React.useState('');
+  const [maxSongs, setMaxSongs] = React.useState(20);
+  const [allowDuplicates, setAllowDuplicates] = React.useState(false);
+  const [autoplay, setAutoplay] = React.useState(true);
+  const [events, setEvents] = React.useState([]);
+
+  React.useEffect(() => {
+    const saved = localStorage.getItem('events');
+    if (saved) {
+      setEvents(JSON.parse(saved));
+    }
+  }, []);
+
+  function persist(next) {
+    localStorage.setItem('events', JSON.stringify(next));
+    setEvents(next);
+  }
+
+  function handleCreate(e) {
+    e.preventDefault();
+    const code = (eventName || 'EVT').replace(/\s+/g, '').slice(0, 6).toUpperCase();
+    const id = Date.now();
+    const share = `${window.location.origin}/join?code=${code}`;
+    const evt = {
+      id,
+      name: eventName,
+      location: eventLocation,
+      status: 'Active',
+      code,
+      share,
+      maxSongs: Number(maxSongs) || 20,
+      allowDuplicates,
+      autoplay,
+      songsInQueue: 0,
+      connectedUsers: 0,
+    };
+    const next = [evt, ...events];
+    persist(next);
+    setEventName('');
+    setEventLocation('');
+    setMaxSongs(20);
+    setAllowDuplicates(false);
+    setAutoplay(true);
+  }
+
+  function endEvent(id) {
+    const next = events.map(e => (e.id === id ? { ...e, status: 'Ended' } : e));
+    persist(next);
+  }
+
+  function removeEvent(id) {
+    const next = events.filter(e => e.id !== id);
+    persist(next);
+  }
+
   return (
     <main>
       <section>
         <h2>Create New Event</h2>
-        <form>
+        <form onSubmit={handleCreate}>
           <div>
             <label htmlFor="eventName">Event Name:</label>
             <input
@@ -14,6 +70,8 @@ export function Dashboard() {
               name="eventName"
               required
               placeholder="Friday Night Set"
+              value={eventName}
+              onChange={(e) => setEventName(e.target.value)}
             />
           </div>
           <div>
@@ -23,6 +81,8 @@ export function Dashboard() {
               id="eventLocation"
               name="location"
               placeholder="Club Downtown"
+              value={eventLocation}
+              onChange={(e) => setEventLocation(e.target.value)}
             />
           </div>
           <div>
@@ -33,18 +93,29 @@ export function Dashboard() {
               name="maxSongs"
               min="5"
               max="50"
-              defaultValue="20"
+              value={maxSongs}
+              onChange={(e) => setMaxSongs(e.target.value)}
             />
           </div>
           <div>
             <label>
-              <input type="checkbox" name="allowDuplicates" />
+              <input
+                type="checkbox"
+                name="allowDuplicates"
+                checked={allowDuplicates}
+                onChange={(e) => setAllowDuplicates(e.target.checked)}
+              />
               Allow duplicate songs
             </label>
           </div>
           <div>
             <label>
-              <input type="checkbox" name="autoplay" defaultChecked />
+              <input
+                type="checkbox"
+                name="autoplay"
+                checked={autoplay}
+                onChange={(e) => setAutoplay(e.target.checked)}
+              />
               Auto-advance queue
             </label>
           </div>
@@ -55,6 +126,24 @@ export function Dashboard() {
       <section>
         <h2>Your Events</h2>
         <div id="eventsList">
+          {events.map((e) => (
+            <div className="event-card" key={e.id}>
+              <h3>{e.name}</h3>
+              <p>Status: <strong>{e.status}</strong></p>
+              <p>Songs in Queue: <span>{e.songsInQueue}</span></p>
+              <p>Connected Users: <span>{e.connectedUsers}</span></p>
+              <p>Event Code: <strong>{e.code}</strong></p>
+              <p>
+                Share Link:
+                <input type="text" value={e.share} readOnly />
+              </p>
+              <div>
+                <button onClick={() => endEvent(e.id)}>End Event</button>
+                <button onClick={() => removeEvent(e.id)}>Remove</button>
+              </div>
+            </div>
+          ))}
+
           <div className="event-card">
             <h3>Friday Night Set</h3>
             <p>Status: <strong>Active</strong></p>
@@ -142,19 +231,6 @@ export function Dashboard() {
             </tr>
           </tbody>
         </table>
-      </section>
-
-      <section>
-        <h2>Live Updates</h2>
-        <div id="liveUpdates">
-          <p>Recent Activity:</p>
-          <div id="updateFeed">
-            <p>Guest_847 added "Levels" by Avicii</p>
-            <p>MusicLover23 upvoted "One More Time"</p>
-            <p>DJ Awesome marked "Animals" as now playing</p>
-            <p>5 new users joined Friday Night Set</p>
-          </div>
-        </div>
       </section>
 
       <section>
