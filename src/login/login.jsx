@@ -24,22 +24,51 @@ export function Login({ userName, authState, onAuthChange }) {
     }
   }, []);
 
-  function handleLogin(e) {
+  async function handleLogin(e) {
     e.preventDefault();
-    const loginUser = email?.split('@')[0] || 'dj';
-    onAuthChange(loginUser, AuthState.Authenticated);
-    setStatus(`Logged in as ${loginUser}`);
+    try {
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
+      
+      if (response.ok) {
+        const data = await response.json();
+        onAuthChange(data.name || data.email.split('@')[0], AuthState.Authenticated);
+        setStatus(`Logged in as ${data.name}`);
+      } else {
+        setStatus('Login failed');
+      }
+    } catch (err) {
+      setStatus('Login error');
+    }
   }
 
-  function handleRegister(e) {
+  async function handleRegister(e) {
     e.preventDefault();
     if (regPassword !== regConfirm) {
       setStatus('Passwords do not match');
       return;
     }
-    const newUser = regName || (regEmail?.split('@')[0] || 'dj');
-    onAuthChange(newUser, AuthState.Authenticated);
-    setStatus(`Registered and logged in as ${newUser}`);
+    
+    try {
+      const response = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: regEmail, password: regPassword, name: regName }),
+      });
+      
+      if (response.ok) {
+        const data = await response.json();
+        onAuthChange(data.name || data.email.split('@')[0], AuthState.Authenticated);
+        setStatus(`Registered as ${data.name}`);
+      } else {
+        setStatus('Registration failed');
+      }
+    } catch (err) {
+      setStatus('Registration error');
+    }
   }
 
   return (
