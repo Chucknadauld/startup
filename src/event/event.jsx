@@ -54,52 +54,45 @@ export function Event() {
         return () => clearInterval(feed);
     }, []);
 
-    function doSearch() {
-        const base = [
-            {
-                title: "Titanium",
-                artist: "David Guetta ft. Sia",
-                album: "Nothing But The Beat",
-                source: "apple",
-            },
-            {
-                title: "Titanium (Alesso Remix)",
-                artist: "David Guetta",
-                album: "Single",
-                source: "soundcloud",
-            },
-            {
-                title: "Titanium (Festival Mix)",
-                artist: "David Guetta",
-                album: "Bootleg",
-                source: "soundcloud",
-            },
-        ];
-        const filtered =
-            source === "both" ? base : base.filter((b) => b.source === source);
-        const withIds = filtered.map((r, i) => ({
-            id: `${r.source}-${i}`,
-            ...r,
-        }));
-        setResults(withIds);
+    async function doSearch() {
+        try {
+            const response = await fetch(
+                `/api/search?query=${query}&source=${source}`,
+            );
+            const data = await response.json();
+            setResults(data);
+        } catch (err) {
+            console.error("Search failed");
+        }
     }
 
-    function addToQueue(item) {
-        const qItem = {
-            id: Date.now(),
-            title: item.title,
-            artist: item.artist,
-            source: item.source,
-            votes: 0,
-            addedBy: "You",
-        };
-        setQueue((q) => [...q, qItem]);
-        setActivity((msgs) =>
-            [{ id: Date.now(), text: `Added "${item.title}"` }, ...msgs].slice(
-                0,
-                10,
-            ),
-        );
+    async function addToQueue(item) {
+        const eventId = localStorage.getItem("currentEventId") || "default";
+
+        try {
+            const response = await fetch(`/api/events/${eventId}/queue`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    title: item.title,
+                    artist: item.artist,
+                    source: item.source,
+                }),
+            });
+
+            if (response.ok) {
+                const qItem = await response.json();
+                setQueue((q) => [...q, { ...qItem, votes: 0, addedBy: "You" }]);
+                setActivity((msgs) =>
+                    [
+                        { id: Date.now(), text: `Added "${item.title}"` },
+                        ...msgs,
+                    ].slice(0, 10),
+                );
+            }
+        } catch (err) {
+            console.error("Failed to add to queue");
+        }
     }
 
     function upvote(id) {
