@@ -135,6 +135,21 @@ app.post("/api/events/:id/queue", authenticate, (req, res) => {
     res.json(queueItem);
 });
 
+app.patch("/api/events/:id/queue/:queueId/vote", authenticate, (req, res) => {
+    const event = events[req.params.id];
+    if (!event) {
+        return res.status(404).json({ msg: "Event not found" });
+    }
+
+    const item = event.queue.find((q) => q.id === req.params.queueId);
+    if (!item) {
+        return res.status(404).json({ msg: "Queue item not found" });
+    }
+
+    item.votes += 1;
+    res.json(item);
+});
+
 app.get("/api/quote", async (req, res) => {
     try {
         const response = await fetch("https://api.quotable.io/random");

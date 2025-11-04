@@ -72,10 +72,27 @@ export function Join() {
         setQueue((q) => [...q, added]);
     }
 
-    function vote(id) {
-        setQueue((q) =>
-            q.map((it) => (it.id === id ? { ...it, votes: it.votes + 1 } : it)),
-        );
+    async function vote(id) {
+        const eventId = localStorage.getItem("currentEventId") || "default";
+
+        try {
+            const response = await fetch(
+                `/api/events/${eventId}/queue/${id}/vote`,
+                {
+                    method: "PATCH",
+                },
+            );
+
+            if (response.ok) {
+                setQueue((q) =>
+                    q.map((it) =>
+                        it.id === id ? { ...it, votes: it.votes + 1 } : it,
+                    ),
+                );
+            }
+        } catch (err) {
+            console.error("Vote failed");
+        }
     }
 
     return (
