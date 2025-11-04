@@ -98,16 +98,16 @@ For this deliverable I converted my application to use React and React routing.
 
 - [x] **Bundled using Vite** - Configured Vite for bundling and development server
 - [x] **Multiple React components** - Converted all HTML pages to React components:
-  - Login component with registration forms
-  - Dashboard component for creating and managing events  
-  - Event component for live DJ controls and queue management
-  - Join component for guest participation
+    - Login component with registration forms
+    - Dashboard component for creating and managing events
+    - Event component for live DJ controls and queue management
+    - Join component for guest participation
 - [x] **React router** - Implemented routing with NavLink and Routes:
-  - / routes to Login
-  - /dashboard routes to Dashboard
-  - /event routes to Event  
-  - /join routes to Join
-  - 404 NotFound component for invalid routes
+    - / routes to Login
+    - /dashboard routes to Dashboard
+    - /event routes to Event
+    - /join routes to Join
+    - 404 NotFound component for invalid routes
 - [x] **Proper component structure** - Organized components in separate directories with modular architecture
 
 ## React Phase 2 deliverable (Interactivity)
@@ -115,23 +115,23 @@ For this deliverable I converted my application to use React and React routing.
 For this deliverable I made the application interactive using React state and effects. All features are implemented or mocked end-to-end so the app behaves like the final product.
 
 - [x] **Auth + Routing**
-  - App-level auth state with `useState` and `useEffect` persists `userName` in `localStorage`
-  - Gated routes for `Dashboard`, `Event`, and `Join` with a simple `RequireAuth`
+    - App-level auth state with `useState` and `useEffect` persists `userName` in `localStorage`
+    - Gated routes for `Dashboard`, `Event`, and `Join` with a simple `RequireAuth`
 - [x] **Login**
-  - Controlled login/register forms
-  - Mock authentication that saves the username and updates app auth state
+    - Controlled login/register forms
+    - Mock authentication that saves the username and updates app auth state
 - [x] **Dashboard**
-  - Controlled event creation form
-  - Events list persisted to `localStorage` with End/Remove actions
+    - Controlled event creation form
+    - Events list persisted to `localStorage` with End/Remove actions
 - [x] **Event**
-  - Mock search results, add to queue, upvote, remove
-  - Now playing with simple progress timer and Mark as Played/Skip
-  - Lightweight activity feed interval
-  - Queue and now playing persisted to `localStorage`
+    - Mock search results, add to queue, upvote, remove
+    - Now playing with simple progress timer and Mark as Played/Skip
+    - Lightweight activity feed interval
+    - Queue and now playing persisted to `localStorage`
 - [x] **Join**
-  - Join form stores guest name
-  - Mock search and add to shared queue; vote on items
-  - Simulated connected users counter
+    - Join form stores guest name
+    - Mock search and add to shared queue; vote on items
+    - Simulated connected users counter
 
 ### How to run locally
 

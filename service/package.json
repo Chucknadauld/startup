@@ -1,19 +1,19 @@
 {
-  "name": "beatqueue-service",
-  "version": "1.0.0",
-  "description": "Backend service for BeatQueue",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "bcryptjs": "^2.4.3",
-    "cookie-parser": "^1.4.7",
-    "express": "^4.21.1",
-    "uuid": "^11.0.3",
-    "yt-dlp-wrap": "^2.3.12"
-  }
+    "name": "beatqueue-service",
+    "version": "1.0.0",
+    "description": "Backend service for BeatQueue",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "bcryptjs": "^2.4.3",
+        "cookie-parser": "^1.4.7",
+        "express": "^4.21.1",
+        "uuid": "^11.0.3",
+        "yt-dlp-wrap": "^2.3.12"
+    }
 }

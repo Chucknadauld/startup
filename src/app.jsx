@@ -76,7 +76,7 @@ export default function App() {
                                         });
                                         handleAuthChange(
                                             "",
-                                            AuthState.Unauthenticated
+                                            AuthState.Unauthenticated,
                                         );
                                     }}
                                 >

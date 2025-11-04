@@ -41,40 +41,44 @@ Styling Progress:
 - Used CSS custom properties and consistent spacing throughout
 - Made sure images and buttons are properly sized and accessible
 
-
 ## React Phase 1 Development Notes
 
 ### Setup & Structure
+
 - Installed Vite, React, React Router, and React Bootstrap with npm
 - Reorganized: moved assets to public/, created src/ with component folders
 - Renamed main.css to app.css, changed body selector to .body
 
 ### Converting to React
+
 - Key changes: `class` → `className`, `for` → `htmlFor`
 - `value` → `defaultValue`, `checked` → `defaultChecked` for uncontrolled inputs
 - Self-closing tags need slash: `<img />`
 - index.html just has a root div, index.jsx renders App into it
 
 ### React Router
+
 - BrowserRouter wraps everything
 - Routes define URL patterns, added NotFound for 404s
 
 ### Issues Fixed
+
 - Forgot to change body to .body in CSS first time
 - Image paths needed to start from public/: `/placeholder.png`
 - Had to update Caddyfile for static file serving
 
 ### Deployment
+
 - deployReact.sh runs `npm run build` then uploads dist/ folder
 - Vite bundles and optimizes everything automatically
 - Way faster than manual deployment
 
 ### What's Next (Phase 2)
-- Add useState hooks 
+
+- Add useState hooks
 - Connect forms and buttons to actual functions
 - Backend API integration
 - WebSocket for real-time updates
-
 
 **MIDTERM NOTES**
 
@@ -93,8 +97,8 @@ A `<div>` is a generic block-level container element used for grouping content. 
 
 ## 4. In the following code, what is the difference between padding and margin?
 
-- **Padding**: Space *inside* the element between content and border. Shows element's background color.
-- **Margin**: Space *outside* the element beyond the border. Creates distance between elements.
+- **Padding**: Space _inside_ the element between content and border. Shows element's background color.
+- **Margin**: Space _outside_ the element beyond the border. Creates distance between elements.
 
 ## 5. Given this HTML and this CSS how will the images be displayed using flex?
 
@@ -103,6 +107,7 @@ With `display: flex` on a container, images default to displaying in a row, alig
 ## 6. What does the following padding CSS do?
 
 Padding creates space around an element's content inside its border. Syntax:
+
 - `padding: 10px;` (all sides)
 - `padding: 10px 20px;` (vertical horizontal)
 - `padding: 10px 20px 15px 25px;` (top right bottom left - clockwise)
@@ -110,17 +115,20 @@ Padding creates space around an element's content inside its border. Syntax:
 ## 7. What does the following code using arrow syntax function declaration do?
 
 Arrow functions provide concise syntax for writing functions:
+
 ```javascript
-const myFunc = (a, b) => a + b;  // implicit return
-const hello = () => "Hello";      // no parameters
+const myFunc = (a, b) => a + b; // implicit return
+const hello = () => "Hello"; // no parameters
 ```
+
 Key difference: Arrow functions don't bind their own `this`.
 
 ## 8. What does the following code using map with an array output?
 
 `map()` creates a new array by calling a function on each element:
+
 ```javascript
-[1, 2, 3].map(x => x * 2)  // Output: [2, 4, 6]
+[1, 2, 3].map((x) => x * 2); // Output: [2, 4, 6]
 ```
 
 ## 9. What does the following code output using getElementByID and addEventListener?
@@ -134,6 +142,7 @@ Key difference: Arrow functions don't bind their own `this`.
 ## 11. Which of the following are true? (mark all that are true about the DOM)
 
 The DOM (Document Object Model):
+
 - Is a tree-like representation of HTML document structure
 - Is an API that allows JavaScript to manipulate HTML/CSS
 - Is made up of nodes where each HTML element is a node
@@ -148,7 +157,7 @@ The DOM (Document Object Model):
 
 ```css
 div {
-  background-color: red;
+    background-color: red;
 }
 ```
 
@@ -156,7 +165,7 @@ div {
 
 ```html
 <a href="destination-url">
-  <img src="image-path.jpg" alt="Description">
+    <img src="image-path.jpg" alt="Description" />
 </a>
 ```
 
@@ -170,9 +179,13 @@ div {
 ## 16. Given the following HTML, what CSS would you use to set the text "trouble" to green and leave the "double" text unaffected?
 
 Use a specific selector targeting the element containing "trouble", such as:
+
 ```css
-#trouble { color: green; }
+#trouble {
+    color: green;
+}
 ```
+
 Or use a more specific descendant/child selector to target only the desired element.
 
 ## 17. What will the following code output when executed using a for loop and console.log?
@@ -182,9 +195,9 @@ The output depends on the specific loop conditions and what is logged. A typical
 ## 18. How would you use JavaScript to select an element with the id of "byu" and change the text color of that element to green?
 
 ```javascript
-document.getElementById('byu').style.color = 'green';
+document.getElementById("byu").style.color = "green";
 // OR
-document.querySelector('#byu').style.color = 'green';
+document.querySelector("#byu").style.color = "green";
 ```
 
 ## 19. What is the opening HTML tag for a paragraph, ordered list, unordered list, second level heading, first level heading, third level heading?
@@ -201,27 +214,31 @@ document.querySelector('#byu').style.color = 'green';
 ```html
 <!DOCTYPE html>
 ```
+
 Place at the very beginning of the document, before the `<html>` tag.
 
 ## 21. What is valid javascript syntax for if, else, for, while, switch statements?
 
 ```javascript
 // if/else
-if (condition) { } else if (condition) { } else { }
+if (condition) {
+} else if (condition) {
+} else {
+}
 
 // for
-for (let i = 0; i < 5; i++) { }
+for (let i = 0; i < 5; i++) {}
 
 // while
-while (condition) { }
+while (condition) {}
 
 // switch
 switch (expression) {
-  case value1:
-    break;
-  case value2:
-    break;
-  default:
+    case value1:
+        break;
+    case value2:
+        break;
+    default:
 }
 ```
 
@@ -229,9 +246,9 @@ switch (expression) {
 
 ```javascript
 const obj = {
-  property1: "value",
-  property2: 42,
-  method: function() { }
+    property1: "value",
+    property2: 42,
+    method: function () {},
 };
 // OR
 const obj = new Object();
@@ -240,28 +257,32 @@ const obj = new Object();
 ## 23. Is it possible to add new properties to javascript objects?
 
 **Yes**. Use dot notation or bracket notation:
+
 ```javascript
 obj.newProp = value;
-obj['newProp'] = value;
+obj["newProp"] = value;
 ```
 
 ## 24. If you want to include JavaScript on an HTML page, which tag do you use?
 
 The `<script>` tag:
+
 ```html
-<script src="file.js"></script>  <!-- External -->
+<script src="file.js"></script>
+<!-- External -->
 <script>
-  // Inline JavaScript
+    // Inline JavaScript
 </script>
 ```
 
 ## 25. Given the following HTML, what JavaScript could you use to set the text "animal" to "crow" and leave the "fish" text unaffected?
 
 Use a selector targeting the specific element containing "animal":
+
 ```javascript
-document.getElementById('animal').textContent = 'crow';
+document.getElementById("animal").textContent = "crow";
 // OR
-document.querySelector('#animal').textContent = 'crow';
+document.querySelector("#animal").textContent = "crow";
 ```
 
 ## 26. Which of the following correctly describes JSON?
@@ -288,6 +309,7 @@ JSON (JavaScript Object Notation) is a lightweight, text-based data format for s
 ## 28. Which of the following console command creates a remote shell session?
 
 **ssh** (Secure Shell)
+
 ```bash
 ssh username@hostname
 ```
@@ -295,6 +317,7 @@ ssh username@hostname
 ## 29. Which of the following is true when the -la parameter is specified for the ls console command?
 
 `ls -la` combines:
+
 - `-l`: Long format (permissions, owner, size, date)
 - `-a`: All files including hidden files (starting with `.`)
 
@@ -325,4 +348,3 @@ A DNS A record **only points to an IPv4 address**, not to another A record. A re
 ## 34. What will the following code using Promises output when executed?
 
 Promises execute asynchronously. They resolve or reject, with `.then()` handling success and `.catch()` handling errors. Output depends on the specific promise code, but promise callbacks execute in the microtask queue before regular tasks.
-

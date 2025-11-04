@@ -10,7 +10,7 @@ React.useEffect(() => {
 const [quote, setQuote] = React.useState("");
 
 React.useEffect(() => {
-    fetch("/api/quote")
+    fetch("https://api.quotable.io/random")
         .then((res) => res.json())
         .then((data) => setQuote(`"${data.content}" - ${data.author}`))
         .catch(() => {});
@@ -68,7 +68,7 @@ export function Dashboard() {
 
     function endEvent(id) {
         const next = events.map((e) =>
-            e.id === id ? { ...e, status: "Ended" } : e
+            e.id === id ? { ...e, status: "Ended" } : e,
         );
         persist(next);
     }
