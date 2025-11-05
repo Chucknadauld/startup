@@ -325,3 +325,4 @@ A DNS A record **only points to an IPv4 address**, not to another A record. A re
 ## 34. What will the following code using Promises output when executed?
 
 Promises execute asynchronously. They resolve or reject, with `.then()` handling success and `.catch()` handling errors. Output depends on the specific promise code, but promise callbacks execute in the microtask queue before regular tasks.
+
