@@ -153,3 +153,14 @@ Verify production:
 ```sh
 curl -I https://startup.beatqueue.click/
 ```
+
+## Service deliverable
+
+For this deliverable I added backend service support with Node.js and Express.
+
+- **Node.js/Express HTTP service** - Created backend service in service/index.js
+- **Static middleware for frontend** - Express serves frontend from public directory
+- **Third party API calls** - Frontend calls quotable.io API for daily quotes
+- **Backend service endpoints** - Endpoints for auth, events, queue management
+- **Frontend calls service endpoints** - Login, register, event creation, queue operations all call backend
+- **Authentication** - Register and login with encrypted password storage, restricted endpoints require auth tokens
