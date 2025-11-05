@@ -1,21 +1,5 @@
 import React from "react";
 
-React.useEffect(() => {
-    fetch("/api/events")
-        .then((res) => res.json())
-        .then((data) => setEvents(data))
-        .catch(() => {});
-}, []);
-
-const [quote, setQuote] = React.useState("");
-
-React.useEffect(() => {
-    fetch("https://api.quotable.io/random")
-        .then((res) => res.json())
-        .then((data) => setQuote(`"${data.content}" - ${data.author}`))
-        .catch(() => {});
-}, []);
-
 export function Dashboard() {
     const [eventName, setEventName] = React.useState("");
     const [eventLocation, setEventLocation] = React.useState("");
@@ -23,12 +7,20 @@ export function Dashboard() {
     const [allowDuplicates, setAllowDuplicates] = React.useState(false);
     const [autoplay, setAutoplay] = React.useState(true);
     const [events, setEvents] = React.useState([]);
+    const [quote, setQuote] = React.useState("");
 
     React.useEffect(() => {
-        const saved = localStorage.getItem("events");
-        if (saved) {
-            setEvents(JSON.parse(saved));
-        }
+        fetch("/api/events")
+            .then((res) => res.json())
+            .then((data) => setEvents(data))
+            .catch(() => {});
+    }, []);
+
+    React.useEffect(() => {
+        fetch("https://api.quotable.io/random")
+            .then((res) => res.json())
+            .then((data) => setQuote(`"${data.content}" - ${data.author}`))
+            .catch(() => {});
     }, []);
 
     function persist(next) {
