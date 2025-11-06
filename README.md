@@ -142,10 +142,10 @@ npm run dev
 
 ### Deployment
 
-Bundle and deploy the React app to production using the provided script.
+Bundle and deploy the app with the provided service script.
 
 ```sh
-./deployReact.sh -k ~/keys/production.pem -h startup.beatqueue.click -s startup
+./deployService.sh -k ~/keys/production.pem -h startup.beatqueue.click -s startup
 ```
 
 Verify production:
@@ -158,9 +158,9 @@ curl -I https://startup.beatqueue.click/
 
 For this deliverable I added backend service support with Node.js and Express.
 
-- **Node.js/Express HTTP service** - Created backend service in service/index.js
-- **Static middleware for frontend** - Express serves frontend from public directory
-- **Third party API calls** - Frontend calls quotable.io API for daily quotes
-- **Backend service endpoints** - Endpoints for auth, events, queue management
-- **Frontend calls service endpoints** - Login, register, event creation, queue operations all call backend
-- **Authentication** - Register and login with encrypted password storage, restricted endpoints require auth tokens
+- **Node.js/Express HTTP service** — Backend in `service/index.js`
+- **Static middleware** — Express serves the built frontend from `public`
+- **Third‑party API** — Music trivia from OpenTDB shown on the Dashboard with a simple “Show answer” button
+- **Service endpoints** — Auth (register, login, logout), events list/create, queue add/vote, and `/api/music-trivia`
+- **Frontend → service calls** — Login/register/logout, events, and queue actions call the backend
+- **Authentication** — Passwords hashed, cookie-based auth, restricted endpoints via middleware

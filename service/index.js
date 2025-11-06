@@ -1,9 +1,11 @@
 const express = require("express");
+const path = require("path");
 const cookieParser = require("cookie-parser");
 const bcrypt = require("bcryptjs");
 const { v4: uuid } = require("uuid");
 
 const app = express();
+const isProd = process.env.NODE_ENV === "production";
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
 
 app.use(express.json());
@@ -30,7 +32,7 @@ app.post("/api/auth/register", async (req, res) => {
 
     res.cookie("token", token, {
         httpOnly: true,
-        secure: true,
+        secure: isProd,
         sameSite: "strict",
     });
     res.json({ email, name });
@@ -49,7 +51,7 @@ app.post("/api/auth/login", async (req, res) => {
 
     res.cookie("token", token, {
         httpOnly: true,
-        secure: true,
+        secure: isProd,
         sameSite: "strict",
     });
     res.json({ email, name: user.name });
@@ -150,13 +152,27 @@ app.patch("/api/events/:id/queue/:queueId/vote", authenticate, (req, res) => {
     res.json(item);
 });
 
-app.get("/api/quote", async (req, res) => {
+app.get("/api/music-trivia", async (req, res) => {
     try {
-        const response = await fetch("https://api.quotable.io/random");
+        const response = await fetch(
+            "https://opentdb.com/api.php?amount=1&category=12&type=multiple&encode=url3986",
+        );
         const data = await response.json();
-        res.json(data);
+        const item = data && data.results && data.results[0];
+        if (!item) {
+            return res.status(502).json({ msg: "No trivia available" });
+        }
+        const decode = (s) => decodeURIComponent(s || "");
+        res.json({
+            question: decode(item.question),
+            correct_answer: decode(item.correct_answer),
+            incorrect_answers: (item.incorrect_answers || []).map(decode),
+            difficulty: item.difficulty,
+            type: item.type,
+            category: decode(item.category),
+        });
     } catch (error) {
-        res.status(500).json({ msg: "Failed to fetch quote" });
+        res.status(500).json({ msg: "Failed to fetch music trivia question" });
     }
 });
 
@@ -170,6 +186,7 @@ app.get("/api/search", authenticate, async (req, res) => {
             artist: "Artist A",
             source: source || "soundcloud",
         },
+
         {
             id: "2",
             title: `${query} Track 2`,
@@ -207,4 +224,12 @@ app.delete("/api/events/:id/queue/:queueId", authenticate, (req, res) => {
 
     event.queue = event.queue.filter((q) => q.id !== req.params.queueId);
     res.status(204).end();
+});
+
+const fallbackPath = path.join(__dirname, "public", "index.html");
+app.get("*", (req, res) => {
+    if (req.path.startsWith("/api")) {
+        return res.status(404).json({ msg: "Not found" });
+    }
+    res.sendFile(fallbackPath);
 });

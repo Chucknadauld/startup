@@ -1,7 +1,9 @@
 import React from "react";
 
 export function Dashboard() {
-    const [quote, setQuote] = React.useState("");
+    const [musicTrivia, setMusicTrivia] = React.useState("");
+    const [triviaAnswer, setTriviaAnswer] = React.useState("");
+    const [showAnswer, setShowAnswer] = React.useState(false);
     const [eventName, setEventName] = React.useState("");
     const [eventLocation, setEventLocation] = React.useState("");
     const [maxSongs, setMaxSongs] = React.useState(20);
@@ -10,16 +12,22 @@ export function Dashboard() {
     const [events, setEvents] = React.useState([]);
 
     React.useEffect(() => {
-        fetch("https://api.quotable.io/random")
+        fetch("/api/music-trivia")
             .then((res) => res.json())
-            .then((data) => setQuote(`"${data.content}" - ${data.author}`))
-            .catch((err) => console.error("Quote error:", err));
+            .then((data) => {
+                if (data && data.question) {
+                    setMusicTrivia(data.question);
+                    setTriviaAnswer(data.correct_answer || "");
+                    setShowAnswer(false);
+                }
+            })
+            .catch((err) => console.error("Music trivia error:", err));
     }, []);
 
     React.useEffect(() => {
         fetch("/api/events")
-            .then((res) => res.json())
-            .then((data) => setEvents(data))
+            .then((res) => (res.ok ? res.json() : []))
+            .then((data) => setEvents(Array.isArray(data) ? data : []))
             .catch(() => {});
     }, []);
 
@@ -47,6 +55,9 @@ export function Dashboard() {
                 const evt = await response.json();
                 const next = [evt, ...events];
                 persist(next);
+                try {
+                    localStorage.setItem("currentEventId", evt.id);
+                } catch {}
                 setEventName("");
                 setEventLocation("");
                 setMaxSongs(20);
@@ -241,8 +252,21 @@ export function Dashboard() {
             </section>
 
             <section>
-                <h2>Daily Inspiration</h2>
-                <p>{quote || "Loading quote..."}</p>
+                <h2>Music Trivia!</h2>
+                <p>
+                    {musicTrivia || "Loading..."}
+                    {musicTrivia && (
+                        <button
+                            style={{ marginLeft: "0.5rem" }}
+                            onClick={() => setShowAnswer((s) => !s)}
+                        >
+                            {showAnswer ? "Hide answer" : "Show answer"}
+                        </button>
+                    )}
+                </p>
+                {showAnswer && triviaAnswer && (
+                    <p>Answer: {triviaAnswer}</p>
+                )}
             </section>
 
             <section>
