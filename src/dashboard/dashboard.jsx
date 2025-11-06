@@ -1,25 +1,25 @@
 import React from "react";
 
 export function Dashboard() {
+    const [quote, setQuote] = React.useState("");
     const [eventName, setEventName] = React.useState("");
     const [eventLocation, setEventLocation] = React.useState("");
     const [maxSongs, setMaxSongs] = React.useState(20);
     const [allowDuplicates, setAllowDuplicates] = React.useState(false);
     const [autoplay, setAutoplay] = React.useState(true);
     const [events, setEvents] = React.useState([]);
-    const [quote, setQuote] = React.useState("");
-
-    React.useEffect(() => {
-        fetch("/api/events")
-            .then((res) => res.json())
-            .then((data) => setEvents(data))
-            .catch(() => {});
-    }, []);
 
     React.useEffect(() => {
         fetch("https://api.quotable.io/random")
             .then((res) => res.json())
             .then((data) => setQuote(`"${data.content}" - ${data.author}`))
+            .catch((err) => console.error("Quote error:", err));
+    }, []);
+
+    React.useEffect(() => {
+        fetch("/api/events")
+            .then((res) => res.json())
+            .then((data) => setEvents(data))
             .catch(() => {});
     }, []);
 

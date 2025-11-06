@@ -215,9 +215,7 @@ export function Event() {
                         value={source}
                         onChange={(e) => setSource(e.target.value)}
                     >
-                        <option value="apple">Apple Music</option>
                         <option value="soundcloud">SoundCloud</option>
-                        <option value="both">Both Sources</option>
                     </select>
                     <button id="searchBtn" onClick={doSearch}>
                         Search
