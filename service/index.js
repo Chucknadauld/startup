@@ -1,3 +1,4 @@
+const { connectToDatabase, getDB } = require("./database");
 const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
@@ -12,23 +13,30 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.static("public"));
 
-const users = {};
+connectToDatabase().catch(console.error);
 const authTokens = {};
 const events = {};
 
 app.post("/api/auth/register", async (req, res) => {
     const { email, password, name } = req.body;
 
-    if (users[email]) {
+    const db = getDB();
+    const users = db.collection("users");
+
+    const existing = await users.findOne({ email });
+    if (existing) {
         return res.status(409).json({ msg: "User already exists" });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const user = { email, password: hashedPassword, name };
-    users[email] = user;
+    await users.insertOne({
+        email,
+        password: hashedPassword,
+        name,
+    });
 
     const token = uuid();
-    authTokens[token] = email;
+    await db.collection("tokens").insertOne({ token, email });
 
     res.cookie("token", token, {
         httpOnly: true,
