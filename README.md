@@ -164,3 +164,12 @@ For this deliverable I added backend service support with Node.js and Express.
 - **Service endpoints** — Auth (register, login, logout), events list/create, queue add/vote, and `/api/music-trivia`
 - **Frontend → service calls** — Login/register/logout, events, and queue actions call the backend
 - **Authentication** — Passwords hashed, cookie-based auth, restricted endpoints via middleware
+
+## DB deliverable
+
+For this deliverable I added database support to persist data.
+
+- **MongoDB Atlas** - created database in Atlas
+- **Stores data in MongoDB** - stores events and song queues in database
+- **Stores credentials** - user info and hashed passwords stored in users collection
+- **Authentication** - tokens stored in database, auth middleware checks database
