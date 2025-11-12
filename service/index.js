@@ -14,8 +14,6 @@ app.use(cookieParser());
 app.use(express.static("public"));
 
 connectToDatabase().catch(console.error);
-const authTokens = {};
-const events = {};
 
 app.post("/api/auth/register", async (req, res) => {
     const { email, password, name } = req.body;
@@ -68,24 +66,30 @@ app.post("/api/auth/login", async (req, res) => {
     res.json({ email, name: user.name });
 });
 
-app.delete("/api/auth/logout", (req, res) => {
+app.delete("/api/auth/logout", async (req, res) => {
     const token = req.cookies.token;
     if (token) {
-        delete authTokens[token];
+        const db = getDB();
+        await db.collection("tokens").deleteOne({ token });
     }
     res.clearCookie("token");
     res.status(204).end();
 });
 
-function authenticate(req, res, next) {
+async function authenticate(req, res, next) {
     const token = req.cookies.token;
-    const email = authTokens[token];
 
-    if (!email) {
+    const db = getDB();
+    const authToken = await db.collection("tokens").findOne({ token });
+
+    if (!authToken) {
         return res.status(401).json({ msg: "Unauthorized" });
     }
 
-    req.user = users[email];
+    const user = await db
+        .collection("users")
+        .findOne({ email: authToken.email });
+    req.user = user;
     next();
 }
 
