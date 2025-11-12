@@ -93,14 +93,16 @@ async function authenticate(req, res, next) {
     next();
 }
 
-app.get("/api/events", authenticate, (req, res) => {
-    const userEvents = Object.values(events).filter(
-        (e) => e.owner === req.user.email,
-    );
-    res.json(userEvents);
+app.get("/api/events", authenticate, async (req, res) => {
+    const db = getDB();
+    const events = await db
+        .collection("events")
+        .find({ owner: req.user.email })
+        .toArray();
+    res.json(events);
 });
 
-app.post("/api/events", authenticate, (req, res) => {
+app.post("/api/events", authenticate, async (req, res) => {
     const { name, location, maxSongs, allowDuplicates, autoplay } = req.body;
     const id = uuid();
     const code =
@@ -120,7 +122,8 @@ app.post("/api/events", authenticate, (req, res) => {
         status: "active",
     };
 
-    events[id] = event;
+    const db = getDB();
+    await db.collection("events").insertOne(event);
     res.json(event);
 });
 
