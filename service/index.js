@@ -127,20 +127,17 @@ app.post("/api/events", authenticate, async (req, res) => {
     res.json(event);
 });
 
-app.get("/api/events/:id", authenticate, (req, res) => {
-    const event = events[req.params.id];
+app.get("/api/events/:id", authenticate, async (req, res) => {
+    const db = getDB();
+    const event = await db.collection("events").findOne({ id: req.params.id });
+
     if (!event) {
         return res.status(404).json({ msg: "Event not found" });
     }
     res.json(event);
 });
 
-app.post("/api/events/:id/queue", authenticate, (req, res) => {
-    const event = events[req.params.id];
-    if (!event) {
-        return res.status(404).json({ msg: "Event not found" });
-    }
-
+app.post("/api/events/:id/queue", authenticate, async (req, res) => {
     const { title, artist, source } = req.body;
     const queueItem = {
         id: uuid(),
@@ -151,7 +148,11 @@ app.post("/api/events/:id/queue", authenticate, (req, res) => {
         addedBy: req.user.email,
     };
 
-    event.queue.push(queueItem);
+    const db = getDB();
+    await db
+        .collection("events")
+        .updateOne({ id: req.params.id }, { $push: { queue: queueItem } });
+
     res.json(queueItem);
 });
 
