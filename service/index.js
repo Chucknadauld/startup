@@ -222,14 +222,6 @@ app.listen(port, () => {
     console.log(`Listening on port ${port}`);
 });
 
-app.get("/api/events/:id/queue", authenticate, (req, res) => {
-    const event = events[req.params.id];
-    if (!event) {
-        return res.status(404).json({ msg: "Event not found" });
-    }
-    res.json(event.queue);
-});
-
 app.delete("/api/events/:id/queue/:queueId", authenticate, async (req, res) => {
     const db = getDB();
 
