@@ -11,7 +11,7 @@ const port = process.argv.length > 2 ? process.argv[2] : 4000;
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(express.static("public"));
+app.use(express.static(path.join(__dirname, "..", "dist")));
 
 connectToDatabase().catch(console.error);
 
@@ -243,7 +243,7 @@ app.delete("/api/events/:id/queue/:queueId", authenticate, async (req, res) => {
     res.status(204).end();
 });
 
-const fallbackPath = path.join(__dirname, "public", "index.html");
+const fallbackPath = path.join(__dirname, "..", "dist", "index.html");
 app.get("*", (req, res) => {
     if (req.path.startsWith("/api")) {
         return res.status(404).json({ msg: "Not found" });
