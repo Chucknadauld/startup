@@ -48,14 +48,17 @@ app.post("/api/auth/register", async (req, res) => {
 
 app.post("/api/auth/login", async (req, res) => {
     const { email, password } = req.body;
-    const user = users[email];
 
+    const db = getDB();
+    const users = db.collection("users");
+
+    const user = await users.findOne({ email });
     if (!user || !(await bcrypt.compare(password, user.password))) {
         return res.status(401).json({ msg: "Invalid credentials" });
     }
 
     const token = uuid();
-    authTokens[token] = email;
+    await db.collection("tokens").insertOne({ token, email });
 
     res.cookie("token", token, {
         httpOnly: true,
