@@ -156,43 +156,38 @@ app.post("/api/events/:id/queue", authenticate, async (req, res) => {
     res.json(queueItem);
 });
 
-app.patch("/api/events/:id/queue/:queueId/vote", authenticate, (req, res) => {
-    const event = events[req.params.id];
+app.patch(
+    "/api/events/:id/queue/:queueId/vote",
+    authenticate,
+    async (req, res) => {
+        const db = getDB();
+
+        await db.collection("events").updateOne(
+            {
+                id: req.params.id,
+                "queue.id": req.params.queueId,
+            },
+            {
+                $inc: { "queue.$.votes": 1 },
+            },
+        );
+
+        const event = await db
+            .collection("events")
+            .findOne({ id: req.params.id });
+        const item = event.queue.find((q) => q.id === req.params.queueId);
+        res.json(item);
+    },
+);
+
+app.get("/api/events/:id/queue", authenticate, async (req, res) => {
+    const db = getDB();
+    const event = await db.collection("events").findOne({ id: req.params.id });
+
     if (!event) {
         return res.status(404).json({ msg: "Event not found" });
     }
-
-    const item = event.queue.find((q) => q.id === req.params.queueId);
-    if (!item) {
-        return res.status(404).json({ msg: "Queue item not found" });
-    }
-
-    item.votes += 1;
-    res.json(item);
-});
-
-app.get("/api/music-trivia", async (req, res) => {
-    try {
-        const response = await fetch(
-            "https://opentdb.com/api.php?amount=1&category=12&type=multiple&encode=url3986",
-        );
-        const data = await response.json();
-        const item = data && data.results && data.results[0];
-        if (!item) {
-            return res.status(502).json({ msg: "No trivia available" });
-        }
-        const decode = (s) => decodeURIComponent(s || "");
-        res.json({
-            question: decode(item.question),
-            correct_answer: decode(item.correct_answer),
-            incorrect_answers: (item.incorrect_answers || []).map(decode),
-            difficulty: item.difficulty,
-            type: item.type,
-            category: decode(item.category),
-        });
-    } catch (error) {
-        res.status(500).json({ msg: "Failed to fetch music trivia question" });
-    }
+    res.json(event.queue);
 });
 
 app.get("/api/search", authenticate, async (req, res) => {
@@ -235,13 +230,16 @@ app.get("/api/events/:id/queue", authenticate, (req, res) => {
     res.json(event.queue);
 });
 
-app.delete("/api/events/:id/queue/:queueId", authenticate, (req, res) => {
-    const event = events[req.params.id];
-    if (!event) {
-        return res.status(404).json({ msg: "Event not found" });
-    }
+app.delete("/api/events/:id/queue/:queueId", authenticate, async (req, res) => {
+    const db = getDB();
 
-    event.queue = event.queue.filter((q) => q.id !== req.params.queueId);
+    await db
+        .collection("events")
+        .updateOne(
+            { id: req.params.id },
+            { $pull: { queue: { id: req.params.queueId } } },
+        );
+
     res.status(204).end();
 });
 
