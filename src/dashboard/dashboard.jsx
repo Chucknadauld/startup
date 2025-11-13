@@ -10,14 +10,19 @@ export function Dashboard() {
     const [allowDuplicates, setAllowDuplicates] = React.useState(false);
     const [autoplay, setAutoplay] = React.useState(true);
     const [events, setEvents] = React.useState([]);
+    const decodeHTML = (html) => {
+        const txt = document.createElement("textarea");
+        txt.innerHTML = html;
+        return txt.value;
+    };
 
     React.useEffect(() => {
         fetch("/api/music-trivia")
             .then((res) => res.json())
             .then((data) => {
                 if (data && data.question) {
-                    setMusicTrivia(data.question);
-                    setTriviaAnswer(data.correct_answer || "");
+                    setMusicTrivia(decodeHTML(data.question));
+                    setTriviaAnswer(decodeHTML(data.correct_answer || ""));
                     setShowAnswer(false);
                 }
             })
@@ -264,9 +269,7 @@ export function Dashboard() {
                         </button>
                     )}
                 </p>
-                {showAnswer && triviaAnswer && (
-                    <p>Answer: {triviaAnswer}</p>
-                )}
+                {showAnswer && triviaAnswer && <p>Answer: {triviaAnswer}</p>}
             </section>
 
             <section>

@@ -11,7 +11,7 @@ const port = process.argv.length > 2 ? process.argv[2] : 4000;
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "..", "dist")));
+app.use(express.static(path.join(__dirname, "public")));
 
 connectToDatabase().catch(console.error);
 
@@ -218,6 +218,28 @@ app.get("/api/search", authenticate, async (req, res) => {
     res.json(mockResults);
 });
 
+app.get("/api/music-trivia", async (req, res) => {
+    try {
+        const response = await fetch(
+            "https://opentdb.com/api.php?amount=1&category=12&type=multiple",
+        );
+        const data = await response.json();
+
+        if (data.results && data.results.length > 0) {
+            const trivia = data.results[0];
+            res.json({
+                question: trivia.question,
+                correct_answer: trivia.correct_answer,
+            });
+        } else {
+            res.json({ question: "No trivia available at this time." });
+        }
+    } catch (err) {
+        console.error("Trivia API error:", err);
+        res.status(500).json({ msg: "Failed to fetch trivia" });
+    }
+});
+
 app.listen(port, () => {
     console.log(`Listening on port ${port}`);
 });
@@ -235,7 +257,7 @@ app.delete("/api/events/:id/queue/:queueId", authenticate, async (req, res) => {
     res.status(204).end();
 });
 
-const fallbackPath = path.join(__dirname, "..", "dist", "index.html");
+const fallbackPath = path.join(__dirname, "public", "index.html");
 app.get("*", (req, res) => {
     if (req.path.startsWith("/api")) {
         return res.status(404).json({ msg: "Not found" });
