@@ -173,3 +173,13 @@ For this deliverable I added database support to persist data.
 - **Stores data in MongoDB** - stores events and song queues in database
 - **Stores credentials** - user info and hashed passwords stored in users collection
 - **Authentication** - tokens stored in database, auth middleware checks database
+
+## WebSocket deliverable
+
+For this deliverable I added WebSocket support for real-time queue updates.
+
+- [x] **Backend listens for WebSocket connection** - WebSocket server created in service/index.js using the ws library
+- [x] **Frontend makes WebSocket connection** - Both Event and Join components connect to WebSocket on mount
+- [x] **Data sent over WebSocket connection** - Queue updates broadcast when songs are added or voted on
+- [x] **WebSocket data displayed** - Queue updates appear in real-time for all connected users on both Event and Join pages
+- [x] **Application fully functional** - All features working end-to-end with real-time updates
