@@ -8,12 +8,51 @@ export function Event() {
     const [nowPlaying, setNowPlaying] = React.useState(null);
     const [progress, setProgress] = React.useState(0);
     const [activity, setActivity] = React.useState([]);
+    const [socket, setSocket] = React.useState(null);
 
     React.useEffect(() => {
         const savedQueue = localStorage.getItem("eventQueue");
         const savedNow = localStorage.getItem("nowPlaying");
         if (savedQueue) setQueue(JSON.parse(savedQueue));
         if (savedNow) setNowPlaying(JSON.parse(savedNow));
+
+        const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
+        const ws = new WebSocket(`${protocol}://${window.location.host}`);
+
+        ws.onopen = () => {
+            console.log('WebSocket connected');
+        };
+
+        ws.onmessage = (event) => {
+            const msg = JSON.parse(event.data);
+            if (msg.type === 'queueUpdate') {
+                if (msg.action === 'add') {
+                    setQueue((q) => [...q, msg.data]);
+                    setActivity((msgs) =>
+                        [
+                            { id: Date.now(), text: `${msg.data.addedBy} added "${msg.data.title}"` },
+                            ...msgs,
+                        ].slice(0, 10),
+                    );
+                } else if (msg.action === 'vote') {
+                    setQueue((q) =>
+                        q.map((item) =>
+                            item.id === msg.data.id ? msg.data : item
+                        )
+                    );
+                }
+            }
+        };
+
+        ws.onclose = () => {
+            console.log('WebSocket disconnected');
+        };
+
+        setSocket(ws);
+
+        return () => {
+            ws.close();
+        };
     }, []);
 
     React.useEffect(() => {
@@ -40,19 +79,6 @@ export function Event() {
         return () => clearInterval(timer);
     }, [nowPlaying]);
 
-    React.useEffect(() => {
-        const feed = setInterval(() => {
-            setActivity((msgs) => {
-                const stamp = new Date().toLocaleTimeString();
-                const next = [
-                    { id: Date.now(), text: `Update at ${stamp}` },
-                    ...msgs,
-                ];
-                return next.slice(0, 10);
-            });
-        }, 5000);
-        return () => clearInterval(feed);
-    }, []);
 
     async function doSearch() {
         try {
