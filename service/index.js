@@ -4,6 +4,7 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const bcrypt = require("bcryptjs");
 const { v4: uuid } = require("uuid");
+const { WebSocketServer } = require("ws");
 
 const app = express();
 const isProd = process.env.NODE_ENV === "production";
@@ -153,6 +154,8 @@ app.post("/api/events/:id/queue", authenticate, async (req, res) => {
         .collection("events")
         .updateOne({ id: req.params.id }, { $push: { queue: queueItem } });
 
+    broadcastQueueUpdate(req.params.id, 'add', queueItem);
+
     res.json(queueItem);
 });
 
@@ -176,6 +179,9 @@ app.patch(
             .collection("events")
             .findOne({ id: req.params.id });
         const item = event.queue.find((q) => q.id === req.params.queueId);
+
+        broadcastQueueUpdate(req.params.id, 'vote', item);
+
         res.json(item);
     },
 );
@@ -240,9 +246,70 @@ app.get("/api/music-trivia", async (req, res) => {
     }
 });
 
-app.listen(port, () => {
+const server = app.listen(port, () => {
     console.log(`Listening on port ${port}`);
 });
+
+const wss = new WebSocketServer({ noServer: true });
+
+function broadcastQueueUpdate(eventId, action, data) {
+    const message = JSON.stringify({
+        type: 'queueUpdate',
+        eventId,
+        action,
+        data
+    });
+
+    connections.forEach((c) => {
+        if (c.ws.readyState === 1) {
+            c.ws.send(message);
+        }
+    });
+}
+
+server.on('upgrade', (request, socket, head) => {
+    wss.handleUpgrade(request, socket, head, (ws) => {
+        wss.emit('connection', ws, request);
+    });
+});
+
+let connections = [];
+
+wss.on('connection', (ws) => {
+    const connection = { id: uuid(), alive: true, ws: ws };
+    connections.push(connection);
+
+    ws.on('message', (data) => {
+        const msg = JSON.parse(data);
+
+        if (msg.type === 'queueUpdate') {
+            connections.forEach((c) => {
+                if (c.id !== connection.id) {
+                    c.ws.send(JSON.stringify(msg));
+                }
+            });
+        }
+    });
+
+    ws.on('close', () => {
+        connections = connections.filter((c) => c.id !== connection.id);
+    });
+
+    ws.on('pong', () => {
+        connection.alive = true;
+    });
+});
+
+setInterval(() => {
+    connections.forEach((c) => {
+        if (!c.alive) {
+            c.ws.terminate();
+        } else {
+            c.alive = false;
+            c.ws.ping();
+        }
+    });
+}, 10000);
 
 app.delete("/api/events/:id/queue/:queueId", authenticate, async (req, res) => {
     const db = getDB();
