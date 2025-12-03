@@ -8,12 +8,45 @@ export function Join() {
     const [source, setSource] = React.useState("apple");
     const [results, setResults] = React.useState([]);
     const [queue, setQueue] = React.useState([]);
+    const [socket, setSocket] = React.useState(null);
 
     React.useEffect(() => {
         const storedGuest = localStorage.getItem("guestName");
         const savedQueue = localStorage.getItem("eventQueue");
         if (storedGuest) setGuestName(storedGuest);
         if (savedQueue) setQueue(JSON.parse(savedQueue));
+
+        const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
+        const ws = new WebSocket(`${protocol}://${window.location.host}`);
+
+        ws.onopen = () => {
+            console.log('WebSocket connected');
+        };
+
+        ws.onmessage = (event) => {
+            const msg = JSON.parse(event.data);
+            if (msg.type === 'queueUpdate') {
+                if (msg.action === 'add') {
+                    setQueue((q) => [...q, msg.data]);
+                } else if (msg.action === 'vote') {
+                    setQueue((q) =>
+                        q.map((item) =>
+                            item.id === msg.data.id ? msg.data : item
+                        )
+                    );
+                }
+            }
+        };
+
+        ws.onclose = () => {
+            console.log('WebSocket disconnected');
+        };
+
+        setSocket(ws);
+
+        return () => {
+            ws.close();
+        };
     }, []);
 
     React.useEffect(() => {
@@ -60,16 +93,27 @@ export function Join() {
         setResults(filtered.map((r, i) => ({ id: `${r.source}-${i}`, ...r })));
     }
 
-    function addToQueue(item) {
-        const added = {
-            id: Date.now(),
-            title: item.title,
-            artist: item.artist,
-            source: item.source,
-            votes: 0,
-            addedBy: guestName || "Guest",
-        };
-        setQueue((q) => [...q, added]);
+    async function addToQueue(item) {
+        const eventId = localStorage.getItem("currentEventId") || "default";
+
+        try {
+            const response = await fetch(`/api/events/${eventId}/queue`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    title: item.title,
+                    artist: item.artist,
+                    source: item.source,
+                }),
+            });
+
+            if (response.ok) {
+                const qItem = await response.json();
+                setQueue((q) => [...q, { ...qItem, addedBy: guestName || "Guest" }]);
+            }
+        } catch (err) {
+            console.error("Failed to add to queue");
+        }
     }
 
     async function vote(id) {
