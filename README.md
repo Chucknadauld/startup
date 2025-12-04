@@ -158,7 +158,7 @@ curl -I https://startup.beatqueue.click/
 
 ## Service deliverable
 
-For this deliverable I added backend service support with Node.js and Express.
+For this delrable I added backend service support with Node.js and Express.
 
 - **Node.js/Express HTTP service** — Backend in `service/index.js`
 - **Static middleware** — Express serves the built frontend from `public`
@@ -169,7 +169,7 @@ For this deliverable I added backend service support with Node.js and Express.
 
 ## DB deliverable
 
-For this deliverable I added database support to persist data.
+For this delrable I added database support to persist data.
 
 - **MongoDB Atlas** - created database in Atlas
 - **Stores data in MongoDB** - stores events and song queues in database
