@@ -16,36 +16,39 @@ export function Event() {
         if (savedQueue) setQueue(JSON.parse(savedQueue));
         if (savedNow) setNowPlaying(JSON.parse(savedNow));
 
-        const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
+        const protocol = window.location.protocol === "https:" ? "wss" : "ws";
         const ws = new WebSocket(`${protocol}://${window.location.host}`);
 
         ws.onopen = () => {
-            console.log('WebSocket connected');
+            console.log("WebSocket connected");
         };
 
         ws.onmessage = (event) => {
             const msg = JSON.parse(event.data);
-            if (msg.type === 'queueUpdate') {
-                if (msg.action === 'add') {
+            if (msg.type === "queueUpdate") {
+                if (msg.action === "add") {
                     setQueue((q) => [...q, msg.data]);
                     setActivity((msgs) =>
                         [
-                            { id: Date.now(), text: `${msg.data.addedBy} added "${msg.data.title}"` },
+                            {
+                                id: Date.now(),
+                                text: `${msg.data.addedBy} added "${msg.data.title}"`,
+                            },
                             ...msgs,
                         ].slice(0, 10),
                     );
-                } else if (msg.action === 'vote') {
+                } else if (msg.action === "vote") {
                     setQueue((q) =>
                         q.map((item) =>
-                            item.id === msg.data.id ? msg.data : item
-                        )
+                            item.id === msg.data.id ? msg.data : item,
+                        ),
                     );
                 }
             }
         };
 
         ws.onclose = () => {
-            console.log('WebSocket disconnected');
+            console.log("WebSocket disconnected");
         };
 
         setSocket(ws);
@@ -78,7 +81,6 @@ export function Event() {
         }, 1000);
         return () => clearInterval(timer);
     }, [nowPlaying]);
-
 
     async function doSearch() {
         try {

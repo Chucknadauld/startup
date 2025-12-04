@@ -16,30 +16,30 @@ export function Join() {
         if (storedGuest) setGuestName(storedGuest);
         if (savedQueue) setQueue(JSON.parse(savedQueue));
 
-        const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
+        const protocol = window.location.protocol === "https:" ? "wss" : "ws";
         const ws = new WebSocket(`${protocol}://${window.location.host}`);
 
         ws.onopen = () => {
-            console.log('WebSocket connected');
+            console.log("WebSocket connected");
         };
 
         ws.onmessage = (event) => {
             const msg = JSON.parse(event.data);
-            if (msg.type === 'queueUpdate') {
-                if (msg.action === 'add') {
+            if (msg.type === "queueUpdate") {
+                if (msg.action === "add") {
                     setQueue((q) => [...q, msg.data]);
-                } else if (msg.action === 'vote') {
+                } else if (msg.action === "vote") {
                     setQueue((q) =>
                         q.map((item) =>
-                            item.id === msg.data.id ? msg.data : item
-                        )
+                            item.id === msg.data.id ? msg.data : item,
+                        ),
                     );
                 }
             }
         };
 
         ws.onclose = () => {
-            console.log('WebSocket disconnected');
+            console.log("WebSocket disconnected");
         };
 
         setSocket(ws);
@@ -109,7 +109,10 @@ export function Join() {
 
             if (response.ok) {
                 const qItem = await response.json();
-                setQueue((q) => [...q, { ...qItem, addedBy: guestName || "Guest" }]);
+                setQueue((q) => [
+                    ...q,
+                    { ...qItem, addedBy: guestName || "Guest" },
+                ]);
             }
         } catch (err) {
             console.error("Failed to add to queue");

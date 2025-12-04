@@ -154,7 +154,7 @@ app.post("/api/events/:id/queue", authenticate, async (req, res) => {
         .collection("events")
         .updateOne({ id: req.params.id }, { $push: { queue: queueItem } });
 
-    broadcastQueueUpdate(req.params.id, 'add', queueItem);
+    broadcastQueueUpdate(req.params.id, "add", queueItem);
 
     res.json(queueItem);
 });
@@ -180,7 +180,7 @@ app.patch(
             .findOne({ id: req.params.id });
         const item = event.queue.find((q) => q.id === req.params.queueId);
 
-        broadcastQueueUpdate(req.params.id, 'vote', item);
+        broadcastQueueUpdate(req.params.id, "vote", item);
 
         res.json(item);
     },
@@ -254,10 +254,10 @@ const wss = new WebSocketServer({ noServer: true });
 
 function broadcastQueueUpdate(eventId, action, data) {
     const message = JSON.stringify({
-        type: 'queueUpdate',
+        type: "queueUpdate",
         eventId,
         action,
-        data
+        data,
     });
 
     connections.forEach((c) => {
@@ -267,22 +267,22 @@ function broadcastQueueUpdate(eventId, action, data) {
     });
 }
 
-server.on('upgrade', (request, socket, head) => {
+server.on("upgrade", (request, socket, head) => {
     wss.handleUpgrade(request, socket, head, (ws) => {
-        wss.emit('connection', ws, request);
+        wss.emit("connection", ws, request);
     });
 });
 
 let connections = [];
 
-wss.on('connection', (ws) => {
+wss.on("connection", (ws) => {
     const connection = { id: uuid(), alive: true, ws: ws };
     connections.push(connection);
 
-    ws.on('message', (data) => {
+    ws.on("message", (data) => {
         const msg = JSON.parse(data);
 
-        if (msg.type === 'queueUpdate') {
+        if (msg.type === "queueUpdate") {
             connections.forEach((c) => {
                 if (c.id !== connection.id) {
                     c.ws.send(JSON.stringify(msg));
@@ -291,11 +291,11 @@ wss.on('connection', (ws) => {
         }
     });
 
-    ws.on('close', () => {
+    ws.on("close", () => {
         connections = connections.filter((c) => c.id !== connection.id);
     });
 
-    ws.on('pong', () => {
+    ws.on("pong", () => {
         connection.alive = true;
     });
 });
