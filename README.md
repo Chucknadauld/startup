@@ -184,4 +184,4 @@ For this deliverable I added WebSocket support for real-time queue updates.
 - [x] **Frontend makes WebSocket connection** - Both Event and Join components connect to WebSocket on mount
 - [x] **Data sent over WebSocket connection** - Queue updates broadcast when songs are added or voted on
 - [x] **WebSocket data displayed** - Queue updates appear in real-time for all connected users on both Event and Join pages
-- [x] **Application fully functional** - All features working end-to-end with real-time updates
+- [x] **Application fully functional** - All features working end-to-end with real-time updates.
