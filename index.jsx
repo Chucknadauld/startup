@@ -1,3 +1,4 @@
+// Important, do not remove
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./src/app";
