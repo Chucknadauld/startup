@@ -1,3 +1,210 @@
+# CS 260 Final Exam Questions
+
+## Question 1: What is the default port for HTTP/HTTPS/SSH?
+
+- **HTTP:** Port 80
+- **HTTPS:** Port 443
+- **SSH:** Port 22
+
+---
+
+## Question 2: What does an HTTP status code in the range of 300/400/500 indicate?
+
+- **300s:** Redirection - resource moved or available at different location
+- **400s:** Client errors - bad request, unauthorized, not found, etc.
+- **500s:** Server errors - server failed to fulfill request
+
+---
+
+## Question 3: What does the HTTP header content-type allow you to do?
+
+Specify the media type/format of data being sent (e.g., `application/json`, `text/html`, `image/jpeg`). Tells the server/client how to interpret the data.
+
+---
+
+## Question 4: What does a "Secure cookie"/"Http-only cookie"/"Same-site cookie" do?
+
+- **Secure cookie:** Only sent over HTTPS, never HTTP
+- **HttpOnly cookie:** Cannot be accessed by JavaScript, only sent to server
+- **SameSite cookie:** Controls when cookies are sent with cross-site requests (Strict/Lax/None)
+
+---
+
+## Question 5: Assuming the following Express middleware, what would be the console.log output for an HTTP GET request with a URL path of /api/document?
+
+_Depends on the specific middleware code provided. Output will be based on the middleware chain and what each middleware logs._
+
+---
+
+## Question 6: Given the following Express service code: What does the following front end JavaScript that performs a fetch return?
+
+_Depends on what the Express endpoint returns and how the fetch processes the response (`.json()`, `.text()`, etc.)._
+
+---
+
+## Question 7: Given the following MongoDB query, select all of the matching documents {name:Mark}
+
+Selects all documents where the `name` field exactly equals `"Mark"` (case-sensitive).
+
+Example matches:
+
+- `{ name: "Mark", age: 30 }`
+- `{ name: "Mark", city: "NYC" }`
+
+Won't match:
+
+- `{ name: "mark" }` (wrong case)
+- `{ name: "Marcus" }` (different value)
+
+---
+
+## Question 8: How should user passwords be stored?
+
+**Hashed** (not plain text or encrypted) using:
+
+- Argon2id (recommended)
+- bcrypt
+- scrypt
+
+Always use a unique salt per password. Hashing is one-way and cannot be reversed.
+
+---
+
+## Question 9: Assuming the following node.js websocket code in the back end, and the following front end websocket code, what will the front end log to the console?
+
+_Depends on the specific WebSocket code - what messages are sent/received and what event handlers log._
+
+---
+
+## Question 10: What is the websocket protocol intended to provide?
+
+Full-duplex, bidirectional communication over a single persistent TCP connection. Enables real-time, two-way communication between client and server with low latency.
+
+---
+
+## Question 11: What do the following acronyms stand for?
+
+- **JSX:** JavaScript XML
+- **JS:** JavaScript
+- **AWS:** Amazon Web Services
+- **NPM:** Node Package Manager
+- **NVM:** Node Version Manager
+
+---
+
+## Question 12: Assuming an HTML document with a body element. What text content will the following React component generate? The react component will use parameters.
+
+_Depends on the specific component code and props passed. Props are passed like HTML attributes and accessed via the props object._
+
+Example:
+
+```javascript
+function Welcome({ name }) {
+    return <h1>Hello, {name}!</h1>;
+}
+// <Welcome name="Sara" /> outputs: "Hello, Sara!"
+```
+
+---
+
+## Question 13: Given a set of React components that include each other, what will be generated
+
+_Depends on the specific components. Components compose into a hierarchy - parent components render child components, creating nested output based on the component tree structure._
+
+---
+
+## Question 14: What does a React component with React.useState do?
+
+Adds state to a functional component. Returns a state variable and a setter function. State persists across re-renders and triggers re-render when updated.
+
+```javascript
+const [count, setCount] = useState(0);
+```
+
+---
+
+## Question 15: What are React Hooks used for?
+
+Allow function components to use React features (state, lifecycle, context, refs) without writing class components. Enable reusing stateful logic between components.
+
+---
+
+## Question 16: What does the State Hook/Context Hook/Ref Hook/Effect Hook/Performance Hook do?
+
+- **useState:** Declares state variable that persists across re-renders
+- **useContext:** Reads context value, allows accessing data from distant parents
+- **useRef:** Creates mutable ref that doesn't trigger re-render, often used for DOM access
+- **useEffect:** Performs side effects (data fetching, subscriptions, DOM manipulation) after render
+- **useMemo:** Caches expensive calculation results
+- **useCallback:** Caches function definition
+
+---
+
+## Question 17: Given React Router code, select statements that are true.
+
+_Depends on the specific code. Key concepts:_
+
+- BrowserRouter uses HTML5 history API
+- Routes match based on URL path
+- Route components render when path matches
+- Link/NavLink for navigation
+- useParams for URL parameters
+- Supports nested routes
+
+---
+
+## Question 18: What does the package.json file do?
+
+Central manifest file for Node.js projects that:
+
+- Lists project dependencies and devDependencies
+- Contains project metadata (name, version, description, author)
+- Defines script commands (start, test, build)
+- Specifies entry point and configuration
+
+---
+
+## Question 19: What does the fetch function do?
+
+Makes HTTP requests to retrieve resources from servers. Returns a Promise that resolves to a Response object.
+
+```javascript
+fetch(url)
+    .then((response) => response.json())
+    .then((data) => console.log(data));
+```
+
+---
+
+## Question 20: What does node.js do?
+
+JavaScript runtime environment that executes JavaScript on the server-side. Built on Chrome's V8 engine. Enables backend JavaScript development with non-blocking, event-driven I/O.
+
+---
+
+## Question 21: What does pm2 do?
+
+Production process manager for Node.js that:
+
+- Keeps applications running (auto-restarts on crash)
+- Manages multiple processes
+- Provides clustering/load balancing
+- Zero-downtime reloads
+- Monitoring and logging
+
+---
+
+## Question 22: What does Vite do?
+
+Modern frontend build tool that:
+
+- Provides ultra-fast development server (serves native ES modules, no bundling during dev)
+- Instant server startup and fast Hot Module Replacement
+- Uses Rollup for optimized production builds
+- Supports TypeScript, JSX, CSS out-of-the-box
+
+# Notes.md continued
+
 Server URL: https://startup.beatqueue.click/
 
 Server IP: http://44.208.222.219/
